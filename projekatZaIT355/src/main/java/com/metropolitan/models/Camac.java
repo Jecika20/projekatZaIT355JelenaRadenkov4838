@@ -2,6 +2,8 @@ package com.metropolitan.models;
 
 import com.metropolitan.enums.TipCamca;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,5 +18,6 @@ import lombok.Setter;
 @PrimaryKeyJoinColumn(name="id",referencedColumnName = "id")
 public class Camac extends  Vozilo{
     private double duzina;
+    @Enumerated(EnumType.STRING)
     private TipCamca tipCamca;
 }

@@ -24,11 +24,20 @@ public class Vozilo {
     private String model;
     private String brend;
     private int godinaProizvodnje;
+
+    @Enumerated(EnumType.STRING)
     private TipVozila tipVozila;
+
     private double cenaPoDanu;
+
+    @Enumerated(EnumType.STRING)
     private StatusVozila statusVozila;
     private double kilometraza;
     private String opis;
+
+    @ManyToOne
+    @JoinColumn(name="salon_id")
+    private Salon salon;
 
     @OneToMany(mappedBy = "vozilo")
     @JsonIgnore

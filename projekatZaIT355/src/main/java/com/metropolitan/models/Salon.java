@@ -1,13 +1,13 @@
 package com.metropolitan.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.Set;
 
 @Getter
 @Setter
@@ -24,5 +24,9 @@ public class Salon {
     private String opis;
     private String adresa;
     private String grad;
+
+    @OneToMany(mappedBy = "salon")
+    @JsonIgnore
+    private Set<Vozilo> vozila;
 
 }

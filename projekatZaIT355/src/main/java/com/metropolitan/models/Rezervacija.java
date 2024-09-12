@@ -21,6 +21,7 @@ public class Rezervacija {
     private LocalDateTime vremeOd;
     private LocalDateTime vremeDo;
     private double ukupnaCena;
+    @Enumerated(EnumType.STRING)
     private StatusRezervacije statusRezervacije;
 
     @ManyToOne

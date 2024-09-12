@@ -27,6 +27,7 @@ public class Korisnik {
     private String sifra;
     private String adresa;
     private String grad;
+    @Enumerated(EnumType.STRING)
     private Uloga uloga;
 
     @OneToMany(mappedBy = "korisnik")
