@@ -34,4 +34,8 @@ public class Vozilo {
     @JsonIgnore
     private Set<Rezervacija> rezervacija;
 
+    @OneToMany(mappedBy = "vozilo")
+    @JsonIgnore
+    private Set<SlikeVozila> slikeVozila;
+
 }
