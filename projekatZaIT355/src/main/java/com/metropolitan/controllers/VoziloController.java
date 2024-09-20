@@ -33,4 +33,16 @@ public class VoziloController {
         }
         return ResponseEntity.notFound().build();
     }
+
+    @GetMapping("/salon/{salon_id}")
+    public ResponseEntity<List<Vozilo>> getVozilaBySalon(@PathVariable int salon_id) {
+        List<Vozilo> vozila= voziloService.getVozilaBySalon(salon_id);
+        if(vozila != null) {
+            return ResponseEntity.ok(vozila);
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+
+
 }

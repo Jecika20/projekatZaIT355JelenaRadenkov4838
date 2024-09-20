@@ -1,5 +1,6 @@
 package com.metropolitan.services;
 
+import com.metropolitan.dtos.SalonDTO;
 import com.metropolitan.models.Salon;
 import com.metropolitan.repositories.SalonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,5 +20,16 @@ public class SalonService {
 
     public Salon getSalonById(int id) {
         return salonRepository.findById(id);
+    }
+
+    public Salon createSalon(SalonDTO salonDTO) {
+        Salon salon = new Salon();
+        salon.setNaziv(salonDTO.getNaziv());
+        salon.setAdresa(salonDTO.getAdresa());
+        salon.setTelefon(salonDTO.getTelefon());
+        salon.setEmail(salonDTO.getEmail());
+        salon.setOpis(salonDTO.getOpis());
+        salon.setGrad(salonDTO.getGrad());
+        return salonRepository.save(salon);
     }
 }

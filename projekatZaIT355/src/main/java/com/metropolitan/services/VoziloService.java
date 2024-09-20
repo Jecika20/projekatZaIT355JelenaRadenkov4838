@@ -19,4 +19,8 @@ public class VoziloService {
     public Vozilo getById(int id) {
         return voziloRepository.findById(id);
     }
+
+    public List<Vozilo> getVozilaBySalon(int salonId) {
+        return voziloRepository.findBySalonId(salonId);
+    }
 }

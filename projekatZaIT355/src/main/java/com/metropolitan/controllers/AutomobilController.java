@@ -1,13 +1,11 @@
 package com.metropolitan.controllers;
 
+import com.metropolitan.dtos.AutomobilDTO;
 import com.metropolitan.models.Automobil;
 import com.metropolitan.services.AutomobilService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,4 +29,14 @@ public class AutomobilController {
         }
         return ResponseEntity.notFound().build();
     }
+
+    @PostMapping
+    public ResponseEntity<Automobil> createAutomobil(@RequestBody AutomobilDTO automobilDTO) {
+        Automobil automobil= automobilService.createAutomobil(automobilDTO);
+        if(automobil != null) {
+            return ResponseEntity.ok(automobil);
+        }
+        return ResponseEntity.badRequest().build();
+    }
+
 }
