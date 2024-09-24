@@ -43,6 +43,37 @@ public class VoziloController {
         return ResponseEntity.notFound().build();
     }
 
+    @GetMapping("/statusRezervisano/{id}")
+    public ResponseEntity<Vozilo> changeToRezervisano(@PathVariable int id) {
+        Vozilo vozilo = voziloService.changeToRezervisano(id);
+        if(vozilo != null) {
+            return ResponseEntity.ok(vozilo);
+        }
+        return ResponseEntity.notFound().build();
+
+    }
+
+    @GetMapping("/statusDostupno/{id}")
+    public ResponseEntity<Vozilo> changeToDostupno(@PathVariable int id) {
+      Vozilo vozilo = voziloService.changeToDostupno(id);
+      if(vozilo != null) {
+          return ResponseEntity.ok(vozilo);
+      }
+      return ResponseEntity.notFound().build();
+
+    }
+
+    @GetMapping("/statusPopravka/{id}")
+    public ResponseEntity<Vozilo> changeToPopravka(@PathVariable int id) {
+        Vozilo vozilo = voziloService.changeToPopravka(id);
+        if(vozilo != null) {
+            return ResponseEntity.ok(vozilo);
+        }
+        return ResponseEntity.notFound().build();
+
+    }
+
+
 
 
 }

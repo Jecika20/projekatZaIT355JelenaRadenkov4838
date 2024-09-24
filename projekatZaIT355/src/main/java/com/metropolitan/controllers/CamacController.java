@@ -1,6 +1,7 @@
 package com.metropolitan.controllers;
 
 import com.metropolitan.dtos.CamacDTO;
+import com.metropolitan.dtos.UpdateCamacDTO;
 import com.metropolitan.models.Camac;
 import com.metropolitan.services.CamacService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,15 @@ public class CamacController {
            return ResponseEntity.ok(camac);
        }
        return ResponseEntity.badRequest().build();
+    }
+
+    @PutMapping
+    public ResponseEntity<Camac> updateCamac(@RequestBody UpdateCamacDTO updateCamacDTO) {
+            Camac camac = camacService.updateCamac(updateCamacDTO);
+            if(camac != null) {
+                return ResponseEntity.ok(camac);
+            }
+            return ResponseEntity.badRequest().build();
     }
 
 }

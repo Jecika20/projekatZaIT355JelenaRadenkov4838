@@ -1,14 +1,13 @@
 package com.metropolitan.controllers;
 
+import com.metropolitan.dtos.MotorDTO;
+import com.metropolitan.dtos.UpdateMotorDTO;
 import com.metropolitan.models.Camac;
 import com.metropolitan.models.Motor;
 import com.metropolitan.services.MotorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -30,6 +29,24 @@ public class MotorController {
             return ResponseEntity.ok(motor);
         }
         return ResponseEntity.notFound().build();
+    }
+
+    @PostMapping
+    public ResponseEntity<Motor> createMotor(@RequestBody MotorDTO motorDTO) {
+        Motor motor = motorService.createMotor(motorDTO);
+        if(motor != null) {
+            return ResponseEntity.ok(motor);
+        }
+        return ResponseEntity.badRequest().build();
+    }
+
+    @PutMapping
+    public ResponseEntity<Motor> updateMotor(@RequestBody UpdateMotorDTO updateMotorDTO) {
+        Motor motor = motorService.updateMotor(updateMotorDTO);
+        if(motor != null) {
+            return ResponseEntity.ok(motor);
+        }
+        return ResponseEntity.badRequest().build();
     }
 
 }

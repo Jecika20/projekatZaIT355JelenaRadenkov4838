@@ -1,6 +1,7 @@
 package com.metropolitan.controllers;
 
 import com.metropolitan.dtos.AutomobilDTO;
+import com.metropolitan.dtos.UpdateAutomobilDTO;
 import com.metropolitan.models.Automobil;
 import com.metropolitan.services.AutomobilService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,15 @@ public class AutomobilController {
     @PostMapping
     public ResponseEntity<Automobil> createAutomobil(@RequestBody AutomobilDTO automobilDTO) {
         Automobil automobil= automobilService.createAutomobil(automobilDTO);
+        if(automobil != null) {
+            return ResponseEntity.ok(automobil);
+        }
+        return ResponseEntity.badRequest().build();
+    }
+
+    @PutMapping
+    public ResponseEntity<Automobil> updateAutomobil(@RequestBody UpdateAutomobilDTO updateAutomobilDTO) {
+        Automobil automobil = automobilService.updateAutomobil(updateAutomobilDTO);
         if(automobil != null) {
             return ResponseEntity.ok(automobil);
         }

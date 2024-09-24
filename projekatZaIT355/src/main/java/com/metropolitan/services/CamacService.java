@@ -1,6 +1,7 @@
 package com.metropolitan.services;
 
 import com.metropolitan.dtos.CamacDTO;
+import com.metropolitan.dtos.UpdateCamacDTO;
 import com.metropolitan.enums.StatusVozila;
 import com.metropolitan.enums.TipCamca;
 import com.metropolitan.enums.TipVozila;
@@ -50,6 +51,22 @@ public class CamacService {
         return camacRepository.save(camac);
     }
 
+    public Camac updateCamac(UpdateCamacDTO updateCamacDTO) {
+        Camac camac = camacRepository.findCamacById(updateCamacDTO.getId());
+        if(camac == null){
+            return null;
+        }
+        camac.setModel(updateCamacDTO.getModel());
+        camac.setBrend(updateCamacDTO.getBrend());
+        camac.setGodinaProizvodnje(updateCamacDTO.getGodinaProizvodnje());
+        camac.setCenaPoDanu(updateCamacDTO.getCenaPoDanu());
+        camac.setStatusVozila(StatusVozila.valueOf(updateCamacDTO.getStatusVozila()));
+        camac.setKilometraza(updateCamacDTO.getKilometraza());
+        camac.setOpis(updateCamacDTO.getOpis());
+        camac.setDuzina(updateCamacDTO.getDuzina());
+        camac.setTipCamca(TipCamca.valueOf(updateCamacDTO.getTipCamca()));
+        return camacRepository.save(camac);
+    }
 }
 
 

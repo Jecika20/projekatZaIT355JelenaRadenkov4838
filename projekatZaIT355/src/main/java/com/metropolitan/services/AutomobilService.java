@@ -1,6 +1,7 @@
 package com.metropolitan.services;
 
 import com.metropolitan.dtos.AutomobilDTO;
+import com.metropolitan.dtos.UpdateAutomobilDTO;
 import com.metropolitan.enums.StatusVozila;
 import com.metropolitan.enums.TipGoriva;
 import com.metropolitan.enums.TipVozila;
@@ -49,6 +50,25 @@ public class AutomobilService {
         automobil.setVrstaAutomobila(VrstaAutomobila.valueOf(automobilDTO.getVrstaAutomobila()));
         automobil.setBrojSedista(automobilDTO.getBrojSedista());
         automobil.setSalon(salon);
+        return automobilRepository.save(automobil);
+    }
+
+    public Automobil updateAutomobil(UpdateAutomobilDTO updateAutomobilDTO) {
+        Automobil automobil = automobilRepository.findAutomobilById(updateAutomobilDTO.getId());
+        if(automobil == null){
+            return null;
+        }
+        automobil.setModel(updateAutomobilDTO.getModel());
+        automobil.setBrend(updateAutomobilDTO.getBrend());
+        automobil.setGodinaProizvodnje(updateAutomobilDTO.getGodinaProizvodnje());
+        automobil.setCenaPoDanu(updateAutomobilDTO.getCenaPoDanu());
+        automobil.setStatusVozila(StatusVozila.valueOf(updateAutomobilDTO.getStatusVozila()));
+        automobil.setKilometraza(updateAutomobilDTO.getKilometraza());
+        automobil.setOpis(updateAutomobilDTO.getOpis());
+        automobil.setBrojVrata(updateAutomobilDTO.getBrojVrata());
+        automobil.setTipGoriva(TipGoriva.valueOf(updateAutomobilDTO.getTipGoriva()));
+        automobil.setBrojSedista(updateAutomobilDTO.getBrojSedista());
+        automobil.setVrstaAutomobila(VrstaAutomobila.valueOf(updateAutomobilDTO.getVrstaAutomobila()));
         return automobilRepository.save(automobil);
     }
 }
