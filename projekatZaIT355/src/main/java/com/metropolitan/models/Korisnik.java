@@ -22,6 +22,7 @@ public class Korisnik {
     private int id;
     private String ime;
     private String prezime;
+    @Column(unique=true)
     private String email;
     private String telefon;
     private String sifra;
