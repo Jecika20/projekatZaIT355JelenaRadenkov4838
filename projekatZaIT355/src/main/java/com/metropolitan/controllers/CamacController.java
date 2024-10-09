@@ -6,6 +6,7 @@ import com.metropolitan.models.Camac;
 import com.metropolitan.services.CamacService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,6 +33,7 @@ public class CamacController {
         return ResponseEntity.notFound().build();
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping
     public ResponseEntity<Camac> createCamac(@RequestBody CamacDTO camacDTO) {
        Camac camac = camacService.createCamac(camacDTO);
@@ -41,6 +43,7 @@ public class CamacController {
        return ResponseEntity.badRequest().build();
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PutMapping
     public ResponseEntity<Camac> updateCamac(@RequestBody UpdateCamacDTO updateCamacDTO) {
             Camac camac = camacService.updateCamac(updateCamacDTO);

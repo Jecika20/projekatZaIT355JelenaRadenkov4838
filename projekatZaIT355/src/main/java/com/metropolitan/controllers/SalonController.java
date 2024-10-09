@@ -5,6 +5,7 @@ import com.metropolitan.models.Salon;
 import com.metropolitan.services.SalonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,6 +32,7 @@ public class SalonController {
       return ResponseEntity.notFound().build();
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping
     public ResponseEntity<Salon> createSalon(@RequestBody SalonDTO salonDTO){
             Salon salon=salonService.createSalon(salonDTO);

@@ -6,6 +6,7 @@ import com.metropolitan.models.Automobil;
 import com.metropolitan.services.AutomobilService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,6 +32,7 @@ public class AutomobilController {
         return ResponseEntity.notFound().build();
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping
     public ResponseEntity<Automobil> createAutomobil(@RequestBody AutomobilDTO automobilDTO) {
         Automobil automobil= automobilService.createAutomobil(automobilDTO);
@@ -40,6 +42,7 @@ public class AutomobilController {
         return ResponseEntity.badRequest().build();
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PutMapping
     public ResponseEntity<Automobil> updateAutomobil(@RequestBody UpdateAutomobilDTO updateAutomobilDTO) {
         Automobil automobil = automobilService.updateAutomobil(updateAutomobilDTO);

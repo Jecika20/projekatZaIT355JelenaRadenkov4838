@@ -4,6 +4,7 @@ import com.metropolitan.models.Vozilo;
 import com.metropolitan.services.VoziloService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,6 +44,7 @@ public class VoziloController {
         return ResponseEntity.notFound().build();
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/statusRezervisano/{id}")
     public ResponseEntity<Vozilo> changeToRezervisano(@PathVariable int id) {
         Vozilo vozilo = voziloService.changeToRezervisano(id);
@@ -53,6 +55,7 @@ public class VoziloController {
 
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/statusDostupno/{id}")
     public ResponseEntity<Vozilo> changeToDostupno(@PathVariable int id) {
       Vozilo vozilo = voziloService.changeToDostupno(id);
@@ -63,6 +66,7 @@ public class VoziloController {
 
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/statusPopravka/{id}")
     public ResponseEntity<Vozilo> changeToPopravka(@PathVariable int id) {
         Vozilo vozilo = voziloService.changeToPopravka(id);

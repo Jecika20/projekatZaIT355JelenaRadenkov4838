@@ -7,6 +7,7 @@ import com.metropolitan.models.Motor;
 import com.metropolitan.services.MotorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,6 +32,7 @@ public class MotorController {
         return ResponseEntity.notFound().build();
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping
     public ResponseEntity<Motor> createMotor(@RequestBody MotorDTO motorDTO) {
         Motor motor = motorService.createMotor(motorDTO);
@@ -40,6 +42,7 @@ public class MotorController {
         return ResponseEntity.badRequest().build();
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PutMapping
     public ResponseEntity<Motor> updateMotor(@RequestBody UpdateMotorDTO updateMotorDTO) {
         Motor motor = motorService.updateMotor(updateMotorDTO);
