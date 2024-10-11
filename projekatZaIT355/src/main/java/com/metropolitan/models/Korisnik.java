@@ -31,8 +31,9 @@ public class Korisnik {
     @Enumerated(EnumType.STRING)
     private Uloga uloga;
 
-    @OneToMany(mappedBy = "korisnik")
+    @OneToMany(mappedBy = "korisnik", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<Rezervacija> rezervacije;
+
 
 }

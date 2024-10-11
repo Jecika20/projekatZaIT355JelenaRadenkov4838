@@ -17,13 +17,13 @@ public class AutomobilController {
     @Autowired
     private AutomobilService automobilService;
 
-    @GetMapping
+    @GetMapping("/get")
     public ResponseEntity<List<Automobil>> getAllAutomobili() {
         List<Automobil> automobili = automobilService.getAllAutomobil();
         return ResponseEntity.ok(automobili);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/get/{id}")
     public ResponseEntity<Automobil> getAutomobilById(@PathVariable int id) {
         Automobil automobil = automobilService.getAutomobilById(id);
         if(automobil != null) {

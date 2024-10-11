@@ -52,4 +52,13 @@ public class VoziloService {
         vozilo.setStatusVozila(StatusVozila.POPRAVKA);
         return voziloRepository.save(vozilo);
     }
+
+    public Vozilo deleteVozilo(int id) {
+        Vozilo vozilo = voziloRepository.findById(id);
+        if(vozilo == null){
+            return null;
+        }
+        voziloRepository.delete(vozilo);
+        return vozilo;
+    }
 }

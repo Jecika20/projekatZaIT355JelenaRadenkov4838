@@ -75,4 +75,14 @@ public class RezervacijaService {
         rezervacija.getVozilo().setStatusVozila(StatusVozila.DOSTUPAN);
         return rezervacijaRepository.save(rezervacija);
     }
+
+    public Rezervacija deleteRezervacija(int id) {
+        Rezervacija rezervacija = rezervacijaRepository.findById(id);
+        if(rezervacija == null){
+            return null;
+        }
+        rezervacija.getVozilo().setStatusVozila(StatusVozila.DOSTUPAN);
+        rezervacijaRepository.delete(rezervacija);
+        return rezervacija;
+    }
 }

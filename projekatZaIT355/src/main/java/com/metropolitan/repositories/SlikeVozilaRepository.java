@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SlikeVozilaRepository extends JpaRepository<SlikeVozila, Integer> {
-
+    SlikeVozila findById(int id);
 }

@@ -32,4 +32,13 @@ public class SalonService {
         salon.setGrad(salonDTO.getGrad());
         return salonRepository.save(salon);
     }
+
+    public Salon deleteSalon(int id) {
+        Salon salon = salonRepository.findById(id);
+        if(salon == null){
+            return null;
+        }
+        salonRepository.delete(salon);
+        return salon;
+    }
 }

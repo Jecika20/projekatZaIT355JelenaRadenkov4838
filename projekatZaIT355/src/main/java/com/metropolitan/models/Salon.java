@@ -25,7 +25,7 @@ public class Salon {
     private String adresa;
     private String grad;
 
-    @OneToMany(mappedBy = "salon")
+    @OneToMany(mappedBy = "salon",  fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<Vozilo> vozila;
 

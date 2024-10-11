@@ -23,7 +23,11 @@ import java.util.Map;
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        if(request.getServletPath().equals("/api/login") || request.getServletPath().equals("/api/register")) {
+        if(request.getServletPath().equals("/api/login") || request.getServletPath().equals("/api/register")  ||
+                request.getServletPath().contains("/api/salon/get") ||
+                request.getServletPath().contains("/api/vozilo/get") ||
+                request.getServletPath().contains("/api/automobil/get")
+        ) {
             filterChain.doFilter(request, response);
         }else{
             String header = request.getHeader("Authorization");

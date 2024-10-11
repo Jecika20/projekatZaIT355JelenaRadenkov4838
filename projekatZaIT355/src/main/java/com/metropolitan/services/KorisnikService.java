@@ -62,4 +62,13 @@ public class KorisnikService implements UserDetailsService {
         return korisnikRepository.save(admin);
 
     }
+
+    public Korisnik deleteKorisnik(int id) {
+        Korisnik korisnik = korisnikRepository.findById(id);
+        if(korisnik == null){
+            return null;
+        }
+        korisnikRepository.delete(korisnik);
+        return korisnik;
+    }
 }

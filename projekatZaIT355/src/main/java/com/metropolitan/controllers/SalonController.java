@@ -17,13 +17,13 @@ public class SalonController {
     @Autowired
     private SalonService salonService;
 
-    @GetMapping
+    @GetMapping("/get")
     public ResponseEntity<List<Salon>>  getAllSalons(){
         List<Salon> saloni = salonService.getAllSalons();
         return ResponseEntity.ok(saloni);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/get/{id}")
     public ResponseEntity<Salon> getSalonById(@PathVariable int id){
       Salon salon = salonService.getSalonById(id);
       if(salon != null){
@@ -40,6 +40,16 @@ public class SalonController {
                 return ResponseEntity.ok(salon);
             }
             return ResponseEntity.badRequest().build();
+    }
+
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Salon> deleteSalon(@PathVariable int id){
+        Salon salon = salonService.deleteSalon(id);
+        if(salon != null){
+            return ResponseEntity.ok(salon);
+        }
+        return ResponseEntity.notFound().build();
     }
 
 }

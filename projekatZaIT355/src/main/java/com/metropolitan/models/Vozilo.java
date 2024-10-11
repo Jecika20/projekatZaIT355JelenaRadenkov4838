@@ -39,11 +39,11 @@ public class Vozilo {
     @JoinColumn(name="salon_id")
     private Salon salon;
 
-    @OneToMany(mappedBy = "vozilo")
+    @OneToMany(mappedBy = "vozilo", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<Rezervacija> rezervacija;
 
-    @OneToMany(mappedBy = "vozilo")
+    @OneToMany(mappedBy = "vozilo", fetch = FetchType.LAZY, cascade = CascadeType.ALL )
     @JsonIgnore
     private Set<SlikeVozila> slikeVozila;
 

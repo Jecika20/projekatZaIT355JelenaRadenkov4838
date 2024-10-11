@@ -42,4 +42,14 @@ public class RezervacijaController {
           }
           return ResponseEntity.notFound().build();
       }
+
+     @PreAuthorize("hasAuthority('ADMIN')")
+     @DeleteMapping("/{id}")
+      public ResponseEntity<Rezervacija> deleteRezervacija(@PathVariable int id){
+          Rezervacija rezervacija = rezervacijaService.deleteRezervacija(id);
+          if(rezervacija != null){
+              return ResponseEntity.ok(rezervacija);
+          }
+         return ResponseEntity.notFound().build();
+      }
 }
