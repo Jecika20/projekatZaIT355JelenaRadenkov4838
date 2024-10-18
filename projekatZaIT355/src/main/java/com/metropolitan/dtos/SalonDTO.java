@@ -16,6 +16,7 @@ public class SalonDTO {
     private String opis;
     private String adresa;
     private String grad;
+    private String slika;
 
 
 }

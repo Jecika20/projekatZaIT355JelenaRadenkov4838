@@ -30,6 +30,7 @@ public class SalonService {
         salon.setEmail(salonDTO.getEmail());
         salon.setOpis(salonDTO.getOpis());
         salon.setGrad(salonDTO.getGrad());
+        salon.setSlika(salonDTO.getSlika());
         return salonRepository.save(salon);
     }
 

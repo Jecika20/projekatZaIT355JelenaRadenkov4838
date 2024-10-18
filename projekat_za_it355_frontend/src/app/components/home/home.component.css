@@ -1,0 +1,27 @@
+.rent {
+    background: url('/assets/back-ground.avif') no-repeat center center; 
+    background-size: cover;
+    height: 60vh;
+    color: blue;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+.rent h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+.rent h3 {
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+.step-icon {
+    font-size: 40px;
+    color: #007bff;
+}
+.step {
+    text-align: center;
+}
