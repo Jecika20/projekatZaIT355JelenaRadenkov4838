@@ -7,6 +7,8 @@ import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HomeComponent } from './components/home/home.component';
 import { SaloniComponent } from './components/saloni/saloni.component';
+import { provideHttpClient } from '@angular/common/http';
+import { VozilaComponent } from './components/vozila/vozila.component';
 
 @NgModule({
   declarations: [
@@ -14,13 +16,14 @@ import { SaloniComponent } from './components/saloni/saloni.component';
     HeaderComponent,
     FooterComponent,
     HomeComponent,
-    SaloniComponent
+    SaloniComponent,
+    VozilaComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [provideHttpClient()],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

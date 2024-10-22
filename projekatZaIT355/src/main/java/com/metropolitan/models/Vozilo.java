@@ -44,7 +44,6 @@ public class Vozilo {
     private Set<Rezervacija> rezervacija;
 
     @OneToMany(mappedBy = "vozilo", fetch = FetchType.LAZY, cascade = CascadeType.ALL )
-    @JsonIgnore
     private Set<SlikeVozila> slikeVozila;
 
 }

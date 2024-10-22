@@ -1,5 +1,6 @@
 package com.metropolitan.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,6 +20,7 @@ public class SlikeVozila {
 
     @ManyToOne
     @JoinColumn(name="vozilo_id")
+    @JsonIgnore
     private Vozilo vozilo;
 
 }
