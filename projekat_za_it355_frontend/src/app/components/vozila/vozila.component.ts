@@ -10,13 +10,19 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class VozilaComponent implements OnInit {
   vozila: Vozilo[]= [];
+  automobili: Vozilo[] = [];
+  motori: Vozilo[] = [];
+  camci: Vozilo[] = [];
   id: string;
   constructor(private voziloService : VoziloService, private route:ActivatedRoute){}
   ngOnInit(): void {
     this.id = this.route.snapshot.params['id'];
     this.voziloService.getVozilaBySalon(Number(this.id)).subscribe({
       next: (res: Vozilo[]) => {
-        console.log(res);
+       this.vozila = res;
+       this.automobili= this.vozila.filter(v => v.tipVozila == 'AUTOMOBIL');
+       this.motori= this.vozila.filter(v => v.tipVozila== 'MOTOR');
+       this.camci= this.vozila.filter(v => v.tipVozila== 'CAMAC');
       }
     });
   }
