@@ -14,7 +14,7 @@
                 <p class="card-text flex-grow-1">{{automobil.opis}}</p>
             </div>
             <div class="card-footer">
-                <button class="btn btn-warning btn-sm w-100">Detaljnije</button>
+                <button class="btn btn-warning btn-sm w-100" (click)="detaljnijeVozila(automobil.id)">Detaljnije</button>
             </div>
         </div>
     </div>
@@ -37,7 +37,7 @@
                 <p class="card-text flex-grow-1" >{{motor.opis}}</p>
             </div>
             <div class="card-footer">
-                <button class="btn btn-warning btn-sm w-100">Detaljnije</button>
+                <button class="btn btn-warning btn-sm w-100" (click)="detaljnijeVozila(motor.id)">Detaljnije</button>
             </div>
         </div>
     </div>
@@ -58,7 +58,7 @@
                 <p class="card-text flex-grow-1">{{camac.opis}}</p>
             </div>
             <div class="card-footer">
-                <button class="btn btn-warning btn-sm w-100">Detaljnije</button>
+                <button class="btn btn-warning btn-sm w-100" (click)="detaljnijeVozila(camac.id)">Detaljnije</button>
             </div>
         </div>
     </div>

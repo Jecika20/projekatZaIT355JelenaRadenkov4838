@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Vozilo } from '../../models/Vozilo/vozilo';
 import { VoziloService } from '../../services/Vozilo/vozilo.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-vozila',
@@ -14,7 +14,7 @@ export class VozilaComponent implements OnInit {
   motori: Vozilo[] = [];
   camci: Vozilo[] = [];
   id: string;
-  constructor(private voziloService : VoziloService, private route:ActivatedRoute){}
+  constructor(private voziloService : VoziloService, private route:ActivatedRoute, private router: Router){}
   ngOnInit(): void {
     this.id = this.route.snapshot.params['id'];
     this.voziloService.getVozilaBySalon(Number(this.id)).subscribe({
@@ -25,6 +25,10 @@ export class VozilaComponent implements OnInit {
        this.camci= this.vozila.filter(v => v.tipVozila== 'CAMAC');
       }
     });
+  }
+
+  detaljnijeVozila(id:number){
+    this.router.navigate(['/detaljnije-vozila', id]);
   }
 }
 

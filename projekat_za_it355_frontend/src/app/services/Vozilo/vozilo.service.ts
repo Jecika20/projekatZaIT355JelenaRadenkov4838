@@ -14,4 +14,9 @@ export class VoziloService {
   getVozilaBySalon(id: number):Observable<Vozilo[]> {
     return this.http.get<Vozilo[]>(this.apiUrl + '/get/salon/' + id);
   }
+
+  getVoziloById(id:number){
+    return this.http.get(this.apiUrl +  '/get/' + id);
+  }
+
 }

@@ -9,6 +9,7 @@ import { HomeComponent } from './components/home/home.component';
 import { SaloniComponent } from './components/saloni/saloni.component';
 import { provideHttpClient } from '@angular/common/http';
 import { VozilaComponent } from './components/vozila/vozila.component';
+import { DetaljnijeVozilaComponent } from './components/detaljnije-vozila/detaljnije-vozila.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { VozilaComponent } from './components/vozila/vozila.component';
     FooterComponent,
     HomeComponent,
     SaloniComponent,
-    VozilaComponent
+    VozilaComponent,
+    DetaljnijeVozilaComponent
   ],
   imports: [
     BrowserModule,

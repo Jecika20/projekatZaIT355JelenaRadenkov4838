@@ -1,0 +1,58 @@
+<app-header></app-header>
+
+<div class="container mt-5 d-flex flex-column mb-5" style="min-height: 68vh;">
+    <div class="row">
+        <div class="col-md-6">
+            <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                  <div class="carousel-item" *ngFor="let voziloSlika of vozilo?.slikeVozila; let i=index" [class.active]="i===0" >
+                    <img src="assets/images/{{voziloSlika.slika}}" class="d-block carousel-image" alt="Slika nije ucitana">
+                  </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+              </div>
+        </div>
+        <div class="col-md-6 text-center">
+            <h1 class="text-center">{{vozilo?.brend}} - {{vozilo?.model}}</h1>
+            <hr>
+            <h3 [ngClass]="{
+                'text-warning': vozilo?.statusVozila ==='POPRAVKA',
+                'text-success': vozilo?.statusVozila ==='DOSTUPAN',
+                'text-danger': vozilo?.statusVozila ==='REZERVISAN'
+            }">Status: {{vozilo?.statusVozila}}</h3>
+            <h3>Kilometraza: {{vozilo?.kilometraza}} km</h3>
+            <h3>Godina proizvodnje: {{vozilo?.godinaProizvodnje}}</h3>
+            <h3>Opis: {{vozilo?.opis}}</h3>
+            <div *ngIf="vozilo?.tipVozila === 'AUTOMOBIL'">
+                <h3>Vrsta automobila: {{vozilo?.vrstaAutomobila}}</h3>
+                <h3>Tip Goriva: {{vozilo?.tipGoriva}}</h3>
+                <h3>Broj sedista: {{vozilo?.brojSedista}}</h3>
+                <h3>Broj vrata: {{vozilo?.brojVrata}}</h3>
+                <h3>Cena po danu: {{vozilo?.cenaPoDanu}} rsd</h3>
+            </div>
+            <div *ngIf="vozilo?.tipVozila === 'MOTOR'">
+                <h3>Vrsta motora: {{vozilo?.tipMotora}}</h3>
+                <h3>Broj cilindara: {{vozilo?.brojCilindara}}</h3>
+                <h3>Broj tockova: {{vozilo?.brojTockova}}</h3>
+                <h3>Cena po danu: {{vozilo?.cenaPoDanu}} rsd </h3>
+            </div>
+            <div *ngIf="vozilo?.tipVozila === 'CAMAC'">
+                <h3>Tip camca: {{vozilo?.tipCamca}}</h3>
+                <h3>Duzina: {{vozilo?.duzina}} m</h3>
+                <h3>Cena po danu: {{vozilo?.cenaPoDanu}} rsd</h3>
+            </div>
+            
+            <button class="btn btn-primary btn-sm w-50">Rezervisi</button>
+        </div>
+    </div>
+</div>
+
+<app-footer></app-footer>
+
