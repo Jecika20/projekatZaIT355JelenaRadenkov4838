@@ -2,7 +2,7 @@
     <nav class="navbar navbar-expand-sm bg-primary navbar-dark">
         <a class="navbar-brand ms-4"  href="/">Rentiranje Vozila</a>
         <div class="container-fluid">
-          <ul class="navbar-nav">
+          <ul class="navbar-nav mrs-auto w-100">
             <li class="nav-item">
               <a class="nav-link" [routerLink]="'/home'" routerLinkActive="active">Pocetna</a>
             </li>
@@ -12,6 +12,32 @@
             <li class="nav-item">
               <a class="nav-link" href="#">O nama</a>
             </li>
+            <ng-container *ngIf="jwtToken==null; else ulogovanTemplate">
+              <li class="nav-item ms-auto mt-1" >
+                <button class="btn btn-danger btn-sm" (click)="login()">
+                  Prijava
+                </button>
+              </li>
+              <li class="nav-item mt-1 ms-2 me-5" >
+                <button class="btn btn-danger btn-sm" (click)="registration()">
+                 Registracija
+                </button>
+              </li>
+            </ng-container> 
+            <ng-template #ulogovanTemplate>
+              <ng-container *ngIf="uloga == 'KLIJENT'">
+                <li class="nav-item  mt-1" >
+                  <button class="btn btn-success btn-sm">
+                   Rezervacije
+                  </button>
+                </li>
+              </ng-container>
+              <li class="nav-item ms-auto mt-1" >
+                <button class="btn btn-danger btn-sm" (click)="odjava()">
+                 Odjava
+                </button>
+              </li>
+            </ng-template>
           </ul>
         </div>
       </nav>

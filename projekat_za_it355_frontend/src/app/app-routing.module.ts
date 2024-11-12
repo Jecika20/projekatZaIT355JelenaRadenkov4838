@@ -4,6 +4,8 @@ import { HomeComponent } from './components/home/home.component';
 import { SaloniComponent } from './components/saloni/saloni.component';
 import { VozilaComponent } from './components/vozila/vozila.component';
 import { DetaljnijeVozilaComponent } from './components/detaljnije-vozila/detaljnije-vozila.component';
+import { LoginComponent } from './components/login/login.component';
+import { RegistrationComponent } from './components/registration/registration.component';
 
 const routes: Routes = [
   {
@@ -17,6 +19,12 @@ const routes: Routes = [
   },
   {
     path:'detaljnije-vozila/:id', component: DetaljnijeVozilaComponent
+  },
+  {
+    path:'login',component:LoginComponent
+  },
+  {
+    path:'registration',component:RegistrationComponent
   },
   {
     path: '', redirectTo: '/home',pathMatch: 'full'

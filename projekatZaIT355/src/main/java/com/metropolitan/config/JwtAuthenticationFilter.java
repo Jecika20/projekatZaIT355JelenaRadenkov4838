@@ -47,6 +47,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .sign(algorithm);
         Map<String, String> tokens = new HashMap<>();
         tokens.put("jwtToken",jwtToken);
+        tokens.put("user",user.getUsername());
+        tokens.put("uloga" , user.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList().get(0));
         response.setContentType("application/json");
         new ObjectMapper().writeValue(response.getOutputStream(), tokens);
     }

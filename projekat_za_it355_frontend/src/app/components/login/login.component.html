@@ -1,0 +1,35 @@
+<app-header></app-header>
+
+<div class="container mt-5  d-flex flex-column mb-5 pr-5 pl-5 w-50" style="min-height: 70vh;">
+    <div class="container mt-5 text-center">
+        Prijava
+    </div>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" formControlName="email" id="email" placeholder="Unesite Vas email"/> 
+            <div *ngIf="loginForm.get('email')?.invalid && (loginForm.get('email')?.touched || loginForm.get('email')?.dirty)">
+                <small class="text-danger" *ngIf="loginForm.get('email')?.errors?.['required']">Email je obavezno polje</small>
+                <small class="text-danger" *ngIf="loginForm.get('email')?.errors?.['email']">Nevalidan email format</small>
+            </div>
+        </div>
+        <div class="form-group mt-3">
+            <label for="sifra" class="form-label">Sifra</label>
+            <input type="password" class="form-control" formControlName="sifra" id="sifra" placeholder="Unesite Vasu sifru"/> 
+            <div *ngIf="loginForm.get('sifra')?.invalid && (loginForm.get('sifra')?.touched || loginForm.get('sifra')?.dirty)">
+                <small class="text-danger" *ngIf="loginForm.get('sifra')?.errors?.['required']">Sifra je obavezno polje</small>
+                <small class="text-danger" *ngIf="loginForm.get('sifra')?.errors?.['minlength']">Sifra mora imati najmanje 3 karaktera</small>
+            </div>
+        </div>
+        <div class="container text-center mt-3">
+            <button type="submit" class="btn w-25 btn-primary btn-sm" [disabled]="loginForm.invalid">
+                Prijavi se
+            </button>
+            <p class="mt-3">Nemate nalog? <a [routerLink]="'/registration'">Registrujte se</a></p>
+        </div>
+    </form>
+</div>
+
+
+<app-footer></app-footer>
+

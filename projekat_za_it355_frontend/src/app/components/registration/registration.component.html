@@ -1,0 +1,82 @@
+<app-header></app-header>
+
+<div class="container mt-5  d-flex flex-column mb-5 pr-5 pl-5 w-50" style="min-height: 70vh;">
+    <div class="container  text-center">
+        Registracija
+    </div>
+    <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="ime" class="form-label">Ime</label>
+            <input type="text" class="form-control" formControlName="ime" id="ime" placeholder="Unesite Vase ime" required/> 
+            <div *ngIf="registrationForm.get('ime')?.invalid && (registrationForm.get('ime')?.touched || registrationForm.get('ime')?.dirty)">
+                <small class="text-danger" *ngIf="registrationForm.get('ime')?.errors?.['required']">Ime je obavezno polje</small>
+                <small class="text-danger" *ngIf="registrationForm.get('ime')?.errors?.['minlength']">Ime mora da ima minimum 3 karaktera</small>
+            </div>
+        </div>
+        <div class="form-group mt-3">
+            <label for="prezime" class="form-label">Prezime</label>
+            <input type="text" class="form-control" formControlName="prezime" id="prezime" placeholder="Unesite Vase prezime" required/> 
+            <div *ngIf="registrationForm.get('prezime')?.invalid && (registrationForm.get('prezime')?.touched || registrationForm.get('prezime')?.dirty)">
+                <small class="text-danger" *ngIf="registrationForm.get('prezime')?.errors?.['required']">Prezime je obavezno polje</small>
+                <small class="text-danger" *ngIf="registrationForm.get('prezime')?.errors?.['minlength']">Prezime mora da ima minimum 3 karaktera</small>
+            </div>
+        </div>
+        <div class="form-group mt-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" formControlName="email" id="email" placeholder="Unesite Vas email" required/> 
+            <div *ngIf="registrationForm.get('email')?.invalid && (registrationForm.get('email')?.touched || registrationForm.get('email')?.dirty)">
+                <small class="text-danger" *ngIf="registrationForm.get('email')?.errors?.['required']">Email je obavezno polje</small>
+                <small class="text-danger" *ngIf="registrationForm.get('email')?.errors?.['email']">Nevalidan email format</small>
+            </div>
+        </div>
+        <div class="form-group mt-3">
+            <label for="telefon" class="form-label">Telefon</label>
+            <input type="text" class="form-control" formControlName="telefon" id="telefon" placeholder="Unesite Vas telefon" required/> 
+            <div *ngIf="registrationForm.get('telefon')?.invalid && (registrationForm.get('telefon')?.touched || registrationForm.get('telefon')?.dirty)">
+                <small class="text-danger" *ngIf="registrationForm.get('telefon')?.errors?.['required']">Telefon je obavezno polje</small>
+                <small class="text-danger" *ngIf="registrationForm.get('telefon')?.errors?.['minlength']">Telefon mora da ima minimum 5 karaktera</small>
+            </div>
+        </div>
+        <div class="form-group mt-3">
+            <label for="sifra" class="form-label">Sifra</label>
+            <input type="password" class="form-control" formControlName="sifra" id="sifra" placeholder="Unesite Vasu sifru" required/>
+            <div *ngIf="registrationForm.get('sifra')?.invalid && (registrationForm.get('sifra')?.touched || registrationForm.get('sifra')?.dirty)">
+                <small class="text-danger" *ngIf="registrationForm.get('sifra')?.errors?.['required']">Sifra je obavezno polje</small>
+                <small class="text-danger" *ngIf="registrationForm.get('sifra')?.errors?.['minlength']">Sifra mora da ima minimum 3 karaktera</small>
+            </div> 
+        </div>
+        <div class="form-group mt-3">
+            <label for="potvrdaSifre" class="form-label">Potvrda sifre</label>
+            <input type="password" class="form-control" formControlName="potvrdaSifre" id="potvrdaSifre" placeholder="Potvrdite sifru" required/> 
+            <div *ngIf="registrationForm.get('potvrdaSifre')?.touched && registrationForm.get('potvrdaSifre')?.invalid || registrationForm.errors?.['sifraMismatch']">
+                <small class="text-danger" *ngIf="registrationForm.get('potvrdaSifre')?.errors?.['required']">PotvrdaSifre je obavezno polje</small>
+                <small class="text-danger" *ngIf="registrationForm.errors?.['sifraMismatch']">Sifre nisu iste</small>
+            </div> 
+           
+        </div>
+        <div class="form-group mt-3">
+            <label for="adresa" class="form-label">Adresa</label>
+            <input type="text" class="form-control" formControlName="adresa" id="adresa" placeholder="Unesite Vasu adresu" required/> 
+            <div *ngIf="registrationForm.get('adresa')?.invalid && (registrationForm.get('adresa')?.touched || registrationForm.get('adresa')?.dirty)">
+                <small class="text-danger" *ngIf="registrationForm.get('adresa')?.errors?.['required']">Adresa je obavezno polje</small>
+            </div> 
+        </div>
+        <div class="form-group mt-3">
+            <label for="grad" class="form-label">Grad</label>
+            <input type="text" class="form-control" formControlName="grad" id="grad" placeholder="Unesite Vas  grad" required/> 
+            <div *ngIf="registrationForm.get('grad')?.invalid && (registrationForm.get('grad')?.touched || registrationForm.get('grad')?.dirty)">
+                <small class="text-danger" *ngIf="registrationForm.get('grad')?.errors?.['required']">Grad je obavezno polje</small>
+            </div> 
+        </div>
+        <div class="container text-center mt-3">
+            <button type="submit" class="btn w-25 btn-primary btn-sm" [disabled]="registrationForm.invalid">
+               Registruj se
+            </button>
+            <p class="mt-3">Vec imate registrovan nalog? <a [routerLink]="'/login'">Prijavite se</a></p>
+        </div>
+    </form>
+</div>
+
+
+<app-footer></app-footer>
+
