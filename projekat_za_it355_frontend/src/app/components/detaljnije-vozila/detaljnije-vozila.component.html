@@ -49,9 +49,46 @@
                 <h3>Cena po danu: {{vozilo?.cenaPoDanu}} rsd</h3>
             </div>
             
-            <button class="btn btn-primary btn-sm w-50">Rezervisi</button>
+            <button class="btn btn-primary btn-sm w-50" *ngIf="jwtToken!==null && uloga==='KLIJENT' && vozilo?.statusVozila ==='DOSTUPAN'" (click)="openDialog(vozilo?.id, vozilo?.model, vozilo?.brend,vozilo?.cenaPoDanu)">Rezervisi</button>
         </div>
     </div>
+
+    <div class="modal fade" [class.show]="showDialog" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" [ngClass]="{'d-block': showDialog}">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">{{dialogTitle}}</h5>
+            <button type="button" class="btn-close" (click)="closeDialog()" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form [formGroup]="vremeForm">
+              <div class="mb-3">
+                <label for="vremeOd" class="form-label">Vreme početka rezervacije:</label>
+                <input type="datetime-local" formControlName="vremeOd" id="vremeOd" class="form-control"/>
+                <div *ngIf="vremeForm.get('vremeOd')?.invalid && vremeForm.get('vremeOd')?.touched">
+                  <small class="text-danger" *ngIf="vremeForm.get('vremeOd')?.errors?.['required']">Vreme od je obavezno polje</small>
+                </div>
+               </div>
+               <div class="mb-3">
+                <label for="vremeDo" class="form-label">Vreme završetka rezervacije:</label>
+                <input type="datetime-local" formControlName="vremeDo" id="vremeDo" class="form-control"/>
+                <div *ngIf="vremeForm.get('vremeDo')?.invalid && vremeForm.get('vremeDo')?.touched">
+                  <small class="text-danger" *ngIf="vremeForm.get('vremeDo')?.errors?.['required']">Vreme do je obavezno polje</small>
+                </div>
+               </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <div class="text-primary">
+              <h4>Ukupna cena: {{vremeForm.get('ukupnaCena')?.value}} rsd</h4>
+            </div>
+            <button type="button" class="btn btn-secondary ms-auto" (click)="closeDialog()">Odustani</button>
+            <button type="button" class="btn btn-primary" [disabled]="vremeForm.invalid || vremeForm.get('ukupnaCena')?.value===0" (click)="createRezervacija()">Potvrdi </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="showDialog" class="modal-backdrop fade show"></div>
 </div>
 
 <app-footer></app-footer>

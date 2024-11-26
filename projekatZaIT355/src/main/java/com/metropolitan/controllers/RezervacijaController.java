@@ -8,11 +8,20 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/rezervacija")
 public class RezervacijaController {
       @Autowired
       private RezervacijaService rezervacijaService;
+
+    @PreAuthorize("hasAnyAuthority('ADMIN','KLIJENT')")
+    @GetMapping("/byKorisnik")
+    public ResponseEntity<List<Rezervacija>> getAllByKorisnik() {
+        List<Rezervacija> rezervacije = rezervacijaService.getRezervacijeByKorisnik();
+        return ResponseEntity.ok(rezervacije);
+    }
 
       @PreAuthorize("hasAnyAuthority('ADMIN','KLIJENT')")
       @PostMapping

@@ -7,7 +7,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HomeComponent } from './components/home/home.component';
 import { SaloniComponent } from './components/saloni/saloni.component';
-import { HTTP_INTERCEPTORS, provideHttpClient } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { VozilaComponent } from './components/vozila/vozila.component';
 import { DetaljnijeVozilaComponent } from './components/detaljnije-vozila/detaljnije-vozila.component';
 import { LoginComponent } from './components/login/login.component';
@@ -16,6 +16,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { authInterceptor } from './auth/auth.interceptor';
+import { RezervacijeComponent } from './components/rezervacije/rezervacije.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { authInterceptor } from './auth/auth.interceptor';
     VozilaComponent,
     DetaljnijeVozilaComponent,
     LoginComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    RezervacijeComponent
   ],
   imports: [
     BrowserModule,
@@ -36,9 +38,11 @@ import { authInterceptor } from './auth/auth.interceptor';
     ReactiveFormsModule,
     ToastrModule.forRoot({ timeOut: 1000, positionClass: 'toast-top-center', preventDuplicates: true, progressBar: true })
   ],
-  providers: [provideHttpClient(), {
+  providers: [provideHttpClient(
+    withInterceptors([authInterceptor])
+  ), {
     provide: HTTP_INTERCEPTORS,
-    useFactory: () => authInterceptor,
+    useFactory: authInterceptor,
     multi: true
   }],
   bootstrap: [AppComponent]

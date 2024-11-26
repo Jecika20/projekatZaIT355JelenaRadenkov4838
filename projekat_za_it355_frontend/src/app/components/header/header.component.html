@@ -27,7 +27,7 @@
             <ng-template #ulogovanTemplate>
               <ng-container *ngIf="uloga == 'KLIJENT'">
                 <li class="nav-item  mt-1" >
-                  <button class="btn btn-success btn-sm">
+                  <button class="btn btn-success btn-sm" (click)="rezervacije()">
                    Rezervacije
                   </button>
                 </li>

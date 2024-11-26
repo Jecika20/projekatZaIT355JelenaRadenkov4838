@@ -45,6 +45,7 @@ export class RegistrationComponent implements OnInit{
         next: (res:any)=>{
           this.toastr.success("Uspesna registracija");
           setTimeout(() => {
+            this.registrationForm.reset();
             this.router.navigate(['/login']);
           }, 500);
         },

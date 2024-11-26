@@ -35,6 +35,15 @@ public class RezervacijaService {
         return rezervacijaRepository.findById(id);
     }
 
+    public List<Rezervacija> getRezervacijeByKorisnik(){
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        Korisnik korisnik = korisnikRepository.findByEmail(email);
+        if(korisnik == null){
+            return null;
+        }
+        return rezervacijaRepository.findByKorisnik(korisnik);
+    }
+
     public Rezervacija createRezervacija(RezervacijaDTO rezervacijaDTO){
          String email = SecurityContextHolder.getContext().getAuthentication().getName();
          Korisnik korisnik = korisnikRepository.findByEmail(email);

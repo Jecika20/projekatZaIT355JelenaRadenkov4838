@@ -6,6 +6,7 @@ import { VozilaComponent } from './components/vozila/vozila.component';
 import { DetaljnijeVozilaComponent } from './components/detaljnije-vozila/detaljnije-vozila.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegistrationComponent } from './components/registration/registration.component';
+import { RezervacijeComponent } from './components/rezervacije/rezervacije.component';
 
 const routes: Routes = [
   {
@@ -25,6 +26,9 @@ const routes: Routes = [
   },
   {
     path:'registration',component:RegistrationComponent
+  },
+  {
+    path: 'rezervacije',component: RezervacijeComponent
   },
   {
     path: '', redirectTo: '/home',pathMatch: 'full'

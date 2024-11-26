@@ -3,3 +3,16 @@
     height: 450px;
     object-fit:  fill;
 }
+.modal-backdrop {
+    background-color: rgba(0, 0, 0, 0.5);  
+  }
+  .modal.fade.show {
+    display: block;
+    opacity: 1;
+    transition: opacity 0.15s linear;
+  }
+  
+  .modal-backdrop.fade.show {
+    opacity: 1; 
+    transition: opacity 0.15s linear;
+  }

@@ -30,6 +30,7 @@ export class LoginComponent implements OnInit{
           sessionStorage.setItem("uloga", res.uloga);
           this.toastr.success("Uspesno ste se ulogovali");
           setTimeout(() => {
+            this.loginForm.reset();
             this.router.navigate(['/home']);
           }, 500);
         },
