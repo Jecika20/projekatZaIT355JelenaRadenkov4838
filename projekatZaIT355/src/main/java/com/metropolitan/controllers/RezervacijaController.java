@@ -16,6 +16,13 @@ public class RezervacijaController {
       @Autowired
       private RezervacijaService rezervacijaService;
 
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @GetMapping
+    public ResponseEntity<List<Rezervacija>> getAll() {
+        List<Rezervacija> rezervacije = rezervacijaService.getAll();
+        return ResponseEntity.ok(rezervacije);
+    }
+
     @PreAuthorize("hasAnyAuthority('ADMIN','KLIJENT')")
     @GetMapping("/byKorisnik")
     public ResponseEntity<List<Rezervacija>> getAllByKorisnik() {

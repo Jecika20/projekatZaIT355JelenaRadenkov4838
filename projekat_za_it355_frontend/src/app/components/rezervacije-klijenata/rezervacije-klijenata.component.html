@@ -1,0 +1,151 @@
+<app-header></app-header>
+
+<div class="container" style="min-height: 80vh;">
+    <h1 class="mt-5"> Aktivne rezervacije klijenata</h1>
+    <hr>
+    <div>
+        <table class="table mb-4 table-hover table-border text-center">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Br. rezervacije</th>
+                    <th>Klijent</th>
+                    <th>Vreme od</th>
+                    <th>Vreme do</th>
+                    <th>Cena</th>
+                    <th>Status</th>
+                    <th>Vozilo</th>
+                    <th>Akcije</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let rk of aktivneRezervacije | paginate: { id: 'paginacijaAktivne',itemsPerPage: 3, currentPage: pageAktivne, totalItems: aktivneRezervacije.length}">
+                    <td class="align-middle">
+                        {{rk.id}}
+                    </td>
+                    <td class="align-middle">
+                        {{rk.korisnik.ime}} {{rk.korisnik.prezime}}, tel: {{rk.korisnik.telefon}}
+                    </td>
+                    <td class="align-middle">
+                        {{rk.vremeOd | date: 'short'}}
+                    </td>
+                    <td class="align-middle">
+                        {{rk.vremeDo | date: 'short'}}
+                    </td>
+                    <td class="align-middle"> 
+                        {{rk.ukupnaCena}} rsd
+                    </td>
+                    <td class="align-middle">
+                        {{rk.statusRezervacije}}
+                    </td>
+                    <td class="align-middle">
+                        <img class="img-fluid" src="/assets/images/{{rk.vozilo.slikeVozila[0].slika}}" alt="Slika nije učitana" style="height: 90px; width: 150px; object-fit: cover;">
+                    </td>
+                    <td class="align-middle">
+                        <button class="btn btn-danger btn-sm" >Otkazi</button>
+                        <button class="btn btn-success btn-sm ms-3" >Zavrsi</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <pagination-controls #paginacijaAktivne (pageChange)="pageAktivne = $event" id="paginacijaAktivne"></pagination-controls>
+    </div>
+
+    <h1 class="mt-5"> Otkazane rezervacije klijenata</h1>
+    <hr>
+    <div>
+        <table class="table mb-4 table-hover table-border text-center">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Br. rezervacije</th>
+                    <th>Klijent</th>
+                    <th>Vreme od</th>
+                    <th>Vreme do</th>
+                    <th>Cena</th>
+                    <th>Status</th>
+                    <th>Vozilo</th>
+                    <th>Akcije</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let rk of otkazaneRezervacije | paginate: { id: 'paginacijaOtkazane',itemsPerPage: 3, currentPage: pageOtkazane, totalItems: otkazaneRezervacije.length}">
+                    <td class="align-middle">
+                        {{rk.id}}
+                    </td>
+                    <td class="align-middle">
+                        {{rk.korisnik.ime}} {{rk.korisnik.prezime}}, tel: {{rk.korisnik.telefon}}
+                    </td>
+                    <td class="align-middle">
+                        {{rk.vremeOd | date: 'short'}}
+                    </td>
+                    <td class="align-middle">
+                        {{rk.vremeDo | date: 'short'}}
+                    </td>
+                    <td class="align-middle"> 
+                        {{rk.ukupnaCena}} rsd
+                    </td>
+                    <td class="align-middle">
+                        {{rk.statusRezervacije}}
+                    </td>
+                    <td class="align-middle">
+                        <img class="img-fluid" src="/assets/images/{{rk.vozilo.slikeVozila[0].slika}}" alt="Slika nije učitana" style="height: 90px; width: 150px; object-fit: cover;">
+                    </td>
+                    <td class="align-middle">
+                        <button class="btn btn-danger btn-sm" >Obrisi</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <pagination-controls #paginacijaOtkazane (pageChange)="pageOtkazane = $event" id="paginacijaOtkazane"></pagination-controls>
+    </div>
+
+    <h1 class="mt-5"> Zavrsene rezervacije klijenata</h1>
+    <hr>
+    <div class="mb-5">
+        <table class="table mb-4 table-hover table-border text-center">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Br. rezervacije</th>
+                    <th>Klijent</th>
+                    <th>Vreme od</th>
+                    <th>Vreme do</th>
+                    <th>Cena</th>
+                    <th>Status</th>
+                    <th>Vozilo</th>
+                    <th>Akcije</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let rk of zavrseneRezervacije | paginate: { id: 'paginacijaZavrsene', itemsPerPage: 3, currentPage: pageZavrsene, totalItems: zavrseneRezervacije.length}">
+                    <td class="align-middle">
+                        {{rk.id}}
+                    </td>
+                    <td class="align-middle">
+                        {{rk.korisnik.ime}} {{rk.korisnik.prezime}}, tel: {{rk.korisnik.telefon}}
+                    </td>
+                    <td class="align-middle">
+                        {{rk.vremeOd | date: 'short'}}
+                    </td>
+                    <td class="align-middle">
+                        {{rk.vremeDo | date: 'short'}}
+                    </td>
+                    <td class="align-middle"> 
+                        {{rk.ukupnaCena}} rsd
+                    </td>
+                    <td class="align-middle">
+                        {{rk.statusRezervacije}}
+                    </td>
+                    <td class="align-middle">
+                        <img class="img-fluid" src="/assets/images/{{rk.vozilo.slikeVozila[0].slika}}" alt="Slika nije učitana" style="height: 90px; width: 150px; object-fit: cover;">
+                    </td>
+                    <td class="align-middle">
+                        <button class="btn btn-danger btn-sm" >Obrisi</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <pagination-controls  (pageChange)="pageZavrsene = $event" id="paginacijaZavrsene"></pagination-controls>
+    </div>
+</div>
+
+<app-footer></app-footer>
+

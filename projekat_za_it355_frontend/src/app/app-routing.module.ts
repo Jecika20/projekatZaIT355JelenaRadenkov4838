@@ -7,6 +7,8 @@ import { DetaljnijeVozilaComponent } from './components/detaljnije-vozila/detalj
 import { LoginComponent } from './components/login/login.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { RezervacijeComponent } from './components/rezervacije/rezervacije.component';
+import { OnamaComponent } from './components/onama/onama.component';
+import { RezervacijeKlijenataComponent } from './components/rezervacije-klijenata/rezervacije-klijenata.component';
 
 const routes: Routes = [
   {
@@ -29,6 +31,12 @@ const routes: Routes = [
   },
   {
     path: 'rezervacije',component: RezervacijeComponent
+  },
+  {
+    path:'onama',component:OnamaComponent
+  },
+  {
+    path: 'rezervacije-klijenata',component: RezervacijeKlijenataComponent
   },
   {
     path: '', redirectTo: '/home',pathMatch: 'full'

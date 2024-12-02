@@ -1,7 +1,7 @@
 <app-header></app-header>
 
 <div class="container" style="min-height: 80vh;">
-    <h1>Rezervacije</h1>
+    <h1 class="mt-5">Rezervacije</h1>
     <hr>
     <div>
         <table class="table mb-4 table-hover table-border text-center">
@@ -13,10 +13,57 @@
                     <th>Cena</th>
                     <th>Status</th>
                     <th>Vozilo</th>
+                    <th>Akcije</th>
                 </tr>
             </thead>
+            <tbody>
+                <tr *ngFor="let rk of rezervacije | paginate: { itemsPerPage: 3, currentPage: page }">
+                    <td class="align-middle">
+                        {{rk.id}}
+                    </td>
+                    <td class="align-middle">
+                        {{rk.vremeOd | date: 'short'}}
+                    </td>
+                    <td class="align-middle">
+                        {{rk.vremeDo | date: 'short'}}
+                    </td>
+                    <td class="align-middle"> 
+                        {{rk.ukupnaCena}} rsd
+                    </td>
+                    <td class="align-middle">
+                        {{rk.statusRezervacije}}
+                    </td>
+                    <td class="align-middle">
+                        <img class="img-fluid" src="/assets/images/{{rk.vozilo.slikeVozila[0].slika}}" alt="Slika nije učitana" style="height: 90px; width: 150px; object-fit: cover;">
+                    </td>
+                    <td class="align-middle">
+                        <button class="btn btn-danger btn-sm" *ngIf="rk.statusRezervacije==='AKTIVNA'" (click)="openDialog(rk.id)">Otkazi</button>
+                    </td>
+                </tr>
+            </tbody>
         </table>
+        <pagination-controls (pageChange)="page = $event"></pagination-controls>
     </div>
+
+    <div class="modal fade" [class.show]="showDialog" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" [ngClass]="{'d-block': showDialog}">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Otkazivanje rezervacije</h5>
+              <button type="button" class="btn-close" (click)="closeDialog()" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <h3 class="text-center">Da li ste sigurni da zelite da otkazete rezervaciju?</h3>
+            </div>
+            <div class="modal-footer">
+              
+              <button type="button" class="btn btn-secondary ms-auto" (click)="closeDialog()">Odustani</button>
+              <button type="button" class="btn btn-danger" (click)="otkaziRezervaciju()" >Potvrdi </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="showDialog" class="modal-backdrop fade show"></div>
 </div>
 
 <app-footer></app-footer>

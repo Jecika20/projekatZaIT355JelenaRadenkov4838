@@ -17,6 +17,9 @@ import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { authInterceptor } from './auth/auth.interceptor';
 import { RezervacijeComponent } from './components/rezervacije/rezervacije.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { OnamaComponent } from './components/onama/onama.component';
+import { RezervacijeKlijenataComponent } from './components/rezervacije-klijenata/rezervacije-klijenata.component';
 
 @NgModule({
   declarations: [
@@ -29,14 +32,17 @@ import { RezervacijeComponent } from './components/rezervacije/rezervacije.compo
     DetaljnijeVozilaComponent,
     LoginComponent,
     RegistrationComponent,
-    RezervacijeComponent
+    RezervacijeComponent,
+    OnamaComponent,
+    RezervacijeKlijenataComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
-    ToastrModule.forRoot({ timeOut: 1000, positionClass: 'toast-top-center', preventDuplicates: true, progressBar: true })
+    ToastrModule.forRoot({ timeOut: 1000, positionClass: 'toast-top-center', preventDuplicates: true, progressBar: true }),
+    NgxPaginationModule
   ],
   providers: [provideHttpClient(
     withInterceptors([authInterceptor])

@@ -30,6 +30,10 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/rezervacije']);
   }
 
+  rezervacijeKlijenata(){
+    this.router.navigate(['/rezervacije-klijenata']);
+  }
+
   odjava(){
     sessionStorage.clear();
     this.toastr.success("Uspesno ste se odjavili");

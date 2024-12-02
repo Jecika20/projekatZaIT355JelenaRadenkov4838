@@ -18,4 +18,12 @@ export class RezervacijaService {
   getRezervacijeByKorisnik():Observable<RezervacijeKorisnika[]> {
     return this.http.get<RezervacijeKorisnika[]>(this.apiUrl + "/byKorisnik");
   }
+
+  otkaziRezervaciju(id:number){
+    return this.http.get(this.apiUrl + "/statusToOtkazano/" + id);
+  }
+
+  getAllRezervacije():Observable<RezervacijeKorisnika[]> {
+    return this.http.get<RezervacijeKorisnika[]>(this.apiUrl);
+  }
 }

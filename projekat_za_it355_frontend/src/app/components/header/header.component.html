@@ -10,7 +10,7 @@
               <a class="nav-link" [routerLink]="'/saloni'" routerLinkActive="active">Saloni</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">O nama</a>
+              <a class="nav-link" [routerLink]="'/onama'" routerLinkActive="active">O nama</a>
             </li>
             <ng-container *ngIf="jwtToken==null; else ulogovanTemplate">
               <li class="nav-item ms-auto mt-1" >
@@ -29,6 +29,13 @@
                 <li class="nav-item  mt-1" >
                   <button class="btn btn-success btn-sm" (click)="rezervacije()">
                    Rezervacije
+                  </button>
+                </li>
+              </ng-container>
+              <ng-container *ngIf="uloga == 'ADMIN'">
+                <li class="nav-item  mt-1" >
+                  <button class="btn btn-warning btn-sm" (click)="rezervacijeKlijenata()">
+                   Rezervacije klijenata
                   </button>
                 </li>
               </ng-container>
