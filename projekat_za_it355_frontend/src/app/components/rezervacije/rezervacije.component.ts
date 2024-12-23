@@ -40,7 +40,7 @@ export class RezervacijeComponent implements OnInit{
     this.rezervacijaService.otkaziRezervaciju(this.rezervacijaZaOtkazivanje).subscribe({
       next: (res:any) => 
       {
-        this.toastr.success("Uspesno ste odkazali rezervaciju");
+        this.toastr.success("Uspesno ste otkazali rezervaciju");
         this.loadData();
       },
       error: (err:any) =>{

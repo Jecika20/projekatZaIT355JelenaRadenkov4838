@@ -13,4 +13,19 @@ export class Vozilo {
     opis:string;
     salon: Salon;
     slikeVozila: SlikeVozila[];
+
+    //dodatno za automobil
+    brojVrata: number;
+    tipGoriva: string;
+    brojSedista: number;
+    vrstaAutomobila: string;
+
+    //dodatno za motor
+    brojCilindara:number;
+    brojTockova:number;
+    tipMotora:string;
+
+    // dodatno za camac
+    duzina: number;
+    tipCamca: string;
 }

@@ -41,8 +41,8 @@
                         <img class="img-fluid" src="/assets/images/{{rk.vozilo.slikeVozila[0].slika}}" alt="Slika nije učitana" style="height: 90px; width: 150px; object-fit: cover;">
                     </td>
                     <td class="align-middle">
-                        <button class="btn btn-danger btn-sm" >Otkazi</button>
-                        <button class="btn btn-success btn-sm ms-3" >Zavrsi</button>
+                        <button class="btn btn-danger btn-sm" (click)="openDialog(rk.id,1)" >Otkazi</button>
+                        <button class="btn btn-success btn-sm ms-3" (click)="openDialog(rk.id,2)" >Zavrsi</button>
                     </td>
                 </tr>
             </tbody>
@@ -90,7 +90,7 @@
                         <img class="img-fluid" src="/assets/images/{{rk.vozilo.slikeVozila[0].slika}}" alt="Slika nije učitana" style="height: 90px; width: 150px; object-fit: cover;">
                     </td>
                     <td class="align-middle">
-                        <button class="btn btn-danger btn-sm" >Obrisi</button>
+                        <button class="btn btn-danger btn-sm" (click)="openDialog(rk.id,3)">Obrisi</button>
                     </td>
                 </tr>
             </tbody>
@@ -138,7 +138,7 @@
                         <img class="img-fluid" src="/assets/images/{{rk.vozilo.slikeVozila[0].slika}}" alt="Slika nije učitana" style="height: 90px; width: 150px; object-fit: cover;">
                     </td>
                     <td class="align-middle">
-                        <button class="btn btn-danger btn-sm" >Obrisi</button>
+                        <button class="btn btn-danger btn-sm" (click)="openDialog(rk.id,3)">Obrisi</button>
                     </td>
                 </tr>
             </tbody>
@@ -147,5 +147,30 @@
     </div>
 </div>
 
+<div class="modal fade" [class.show]="showDialog" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" [ngClass]="{'d-block': showDialog}">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel" *ngIf="flag==1">Otkazivanje rezervacije</h5>
+          <h5 class="modal-title" id="exampleModalLabel" *ngIf="flag==2">Zavrsavanje rezervacije</h5>
+          <h5 class="modal-title" id="exampleModalLabel" *ngIf="flag==3">Brisanje rezervacije</h5>
+          <button type="button" class="btn-close" (click)="closeDialog()" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <h3 class="text-center" *ngIf="flag==1">Da li ste sigurni da zelite da otkazete rezervaciju?</h3>
+          <h3 class="text-center" *ngIf="flag==2">Da li ste sigurni da zelite da zavrsite rezervaciju?</h3>
+          <h3 class="text-center" *ngIf="flag==3">Da li ste sigurni da zelite da obrisete rezervaciju?</h3>
+        </div>
+        <div class="modal-footer">
+          
+          <button type="button" class="btn btn-secondary ms-auto" (click)="closeDialog()">Odustani</button>
+          <button type="button" class="btn btn-danger" *ngIf="flag==1" (click)="otkazi()" >Potvrdi otkazivanje </button>
+          <button type="button" class="btn btn-danger" *ngIf="flag==2" (click)="zavrsi()">Potvrdi zavrsavanje </button>
+          <button type="button" class="btn btn-danger" *ngIf="flag==3"(click)="obrisi()" >Potvrdi brisanje </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="showDialog" class="modal-backdrop fade show"></div>
 <app-footer></app-footer>
 

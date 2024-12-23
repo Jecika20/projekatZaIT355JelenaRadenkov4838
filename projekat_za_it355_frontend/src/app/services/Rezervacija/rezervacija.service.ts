@@ -26,4 +26,11 @@ export class RezervacijaService {
   getAllRezervacije():Observable<RezervacijeKorisnika[]> {
     return this.http.get<RezervacijeKorisnika[]>(this.apiUrl);
   }
+
+  zavrsiRezervaciju(id:number){
+    return this.http.get(this.apiUrl + "/statusToZavrseno/" +id);
+  }
+  brisanjeRezervacije(id:number){
+    return this.http.delete(this.apiUrl+ "/" +id);
+  }
 }

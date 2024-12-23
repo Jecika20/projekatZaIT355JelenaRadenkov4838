@@ -1,11 +1,17 @@
 <app-header></app-header>
 
 <div class="container" style="min-height: 80vh;">
+    <button class="btn btn-success btn-sm m-5" (click)="openCreateDialog()">Dodaj novo vozilo</button>
     <h1>Automobili</h1>
     <hr>
     <div class="d-flex p-4 flex-wrap justify-content-start" *ngIf="automobili.length>0; else emptyAutomobili" style="align-items: stretch;">
         <div class="card mt-3 " style="flex: 0  0 350px; margin-right: 65px; display: flex; flex-direction: column;" *ngFor="let automobil of automobili">
-            <img class="card-img-top" src="/assets/images/{{automobil.slikeVozila[0].slika}}" alt="Slika nije ucitana" style="height: 215px; object-fit: cover;">
+            <ng-container *ngIf="automobil.slikeVozila.length>0; else nemaSliku">
+                <img class="card-img-top" src="/assets/images/{{automobil.slikeVozila[0].slika}}" alt="Slika nije ucitana" style="height: 215px; object-fit: cover;">
+            </ng-container>
+            <ng-template #nemaSliku>
+                <img class="card-img-top" src="/assets/images/noimage.jpg" alt="Slika nije ucitana" style="height: 215px; object-fit: cover;">
+            </ng-template>
             <div class="card-body d-flex flex-grow-1" style="display: flex; flex-direction: column;">
                 <h4 class="card-title">{{automobil.brend}}, {{automobil.model}}, Status: {{automobil.statusVozila}}</h4>
                 <h5 class="card-subtitle mb-2 text-muted">Cena: {{automobil.cenaPoDanu}} RSD</h5>
@@ -15,20 +21,29 @@
             </div>
             <div class="card-footer">
                 <button class="btn btn-warning btn-sm w-100" (click)="detaljnijeVozila(automobil.id)">Detaljnije</button>
+                <div *ngIf="uloga=='ADMIN'" class="mt-2 d-flex align-items-center justify-content-between">
+                    <button class="btn btn-outline-warning btn-sm  w-100" (click)="openDialog(automobil.id,1,'AUTOMOBIL')">Izmeni</button>
+                    <button class="btn btn-outline-danger btn-sm w-100" (click)="openDialog(automobil.id,2,'AUTOMOBIL')" >Obrisi</button>
+                </div>
             </div>
         </div>
     </div>
     <ng-template #emptyAutomobili>
         <h3 class="text-danger">Trenutno nemamo automobila za iznajmljivanje</h3>
     </ng-template>
-    
+
 
 
     <h1>Motori</h1>
     <hr>
     <div class="d-flex p-4 flex-wrap justify-content-start" *ngIf="motori.length>0; else emptyMotori"  style="align-items: stretch;">
         <div class="card mt-3 " style="flex: 0  0 350px; margin-right: 65px; display: flex; flex-direction: column;" *ngFor="let motor of motori">
-            <img class="card-img-top" src="/assets/images/{{motor.slikeVozila[0].slika}}" alt="Slika nije ucitana" style="height: 215px; object-fit: cover;">
+            <ng-container *ngIf="motor.slikeVozila.length>0; else nemaSliku">
+                <img class="card-img-top" src="/assets/images/{{motor.slikeVozila[0].slika}}" alt="Slika nije ucitana" style="height: 215px; object-fit: cover;">
+            </ng-container>
+            <ng-template #nemaSliku>
+                <img class="card-img-top" src="/assets/images/noimage.jpg" alt="Slika nije ucitana" style="height: 215px; object-fit: cover;">
+            </ng-template>
             <div class="card-body d-flex flex-grow-1" style="display: flex; flex-direction: column;">
                 <h4 class="card-title">{{motor.brend}}, {{motor.model}}, Status: {{motor.statusVozila}}</h4>
                 <h5 class="card-subtitle mb-2 text-muted">Cena: {{motor.cenaPoDanu}} RSD</h5>
@@ -38,6 +53,10 @@
             </div>
             <div class="card-footer">
                 <button class="btn btn-warning btn-sm w-100" (click)="detaljnijeVozila(motor.id)">Detaljnije</button>
+                <div *ngIf="uloga=='ADMIN'" class="mt-2 d-flex align-items-center justify-content-between">
+                    <button class="btn btn-outline-warning btn-sm  w-100" (click)="openDialog(motor.id,1,'MOTOR')">Izmeni</button>
+                    <button class="btn btn-outline-danger btn-sm w-100" (click)="openDialog(motor.id,2,'MOTOR')">Obrisi</button>
+                </div>
             </div>
         </div>
     </div>
@@ -49,7 +68,12 @@
     <hr>
     <div class="d-flex p-4 flex-wrap" *ngIf="camci.length > 0; else emptyCamci" style="align-items: stretch;">
         <div class="card mt-3" style="flex: 0  0 350px; margin-right: 65px; display: flex; flex-direction: column;" *ngFor="let camac of camci">
-            <img class="card-img-top" src="/assets/images/{{camac.slikeVozila[0].slika}}" alt="Slika nije učitana" style="height: 215px; object-fit: cover;">
+            <ng-container *ngIf="camac.slikeVozila.length>0; else nemaSliku">
+                <img class="card-img-top" src="/assets/images/{{camac.slikeVozila[0].slika}}" alt="Slika nije ucitana" style="height: 215px; object-fit: cover;">
+            </ng-container>
+            <ng-template #nemaSliku>
+                <img class="card-img-top" src="/assets/images/noimage.jpg" alt="Slika nije ucitana" style="height: 215px; object-fit: cover;">
+            </ng-template>
             <div class="card-body d-flex flex-grow-1" style="display: flex; flex-direction: column;">
                 <h4 class="card-title">{{camac.brend}}, {{camac.model}}, Status: {{camac.statusVozila}}</h4>
                 <h5 class="card-subtitle mb-2 text-muted">Cena: {{camac.cenaPoDanu}} RSD</h5>
@@ -59,13 +83,445 @@
             </div>
             <div class="card-footer">
                 <button class="btn btn-warning btn-sm w-100" (click)="detaljnijeVozila(camac.id)">Detaljnije</button>
+                <div *ngIf="uloga=='ADMIN'" class="mt-2 d-flex align-items-center justify-content-between">
+                    <button class="btn btn-outline-warning btn-sm  w-100" (click)="openDialog(camac.id,1,'CAMAC')">Izmeni</button>
+                    <button class="btn btn-outline-danger btn-sm w-100" (click)="openDialog(camac.id,2,'CAMAC')">Obrisi</button>
+                </div>
             </div>
         </div>
     </div>
     <ng-template #emptyCamci>
         <h3 class="text-danger">Trenutno nemamo camaca za iznajmljivanje</h3>
     </ng-template>
-</div>
 
+
+<div class="modal fade" [class.show]="showDialog" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" [ngClass]="{'d-block': showDialog}">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel" *ngIf="flag==1">Izmena vozila</h5>
+          <h5 class="modal-title" id="exampleModalLabel" *ngIf="flag==2">Brisanje vozila</h5>
+          <button type="button" class="btn-close" (click)="closeDialog()" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <h3 class="text-center"  *ngIf="flag==2">Da li ste sigurni da zelite da obrisete vozilo?</h3>
+          <form [formGroup]="automobilForm" *ngIf="flag==1 && tipVozila=='AUTOMOBIL'">
+            <div class="form-group">
+                <label for="model" class="form-label">Model</label>
+                <input type="text" class="form-control" formControlName="model" id="model" placeholder="Unesite model" required/>
+                <div *ngIf="automobilForm.get('model')?.invalid && (automobilForm.get('model')?.touched || automobilForm.get('model')?.dirty)">
+                    <small class="text-danger" *ngIf="automobilForm.get('model')?.errors?.['required']">Model je obavezno polje</small>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="brend" class="form-label">Brend</label>
+                <input type="text" class="form-control" formControlName="brend" id="brend" placeholder="Unesite  brend" required/>
+                <div *ngIf="automobilForm.get('brend')?.invalid && (automobilForm.get('brend')?.touched || automobilForm.get('brend')?.dirty)">
+                    <small class="text-danger" *ngIf="automobilForm.get('brend')?.errors?.['required']">Brend je obavezno polje</small>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="godinaProizvodnje" class="form-label">Godina proizvodnje</label>
+                <input type="number" class="form-control" formControlName="godinaProizvodnje" id="godinaProizvodnje" placeholder="Unesite godinu proizvodnje" required/>
+                <div *ngIf="automobilForm.get('godinaProizvodnje')?.invalid && (automobilForm.get('godinaProizvodnje')?.touched || automobilForm.get('godinaProizvodnje')?.dirty)">
+                    <small class="text-danger" *ngIf="automobilForm.get('godinaProizvodnje')?.errors?.['required']">Godina proizvodnje je obavezno polje</small>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="kilometraza" class="form-label">Kilometraza</label>
+                <input type="number" class="form-control" formControlName="kilometraza" id="kilometraza" placeholder="Unesite kilometrazu" required/>
+                <div *ngIf="automobilForm.get('kilometraza')?.invalid && (automobilForm.get('kilometraza')?.touched || automobilForm.get('kilometraza')?.dirty)">
+                    <small class="text-danger" *ngIf="automobilForm.get('kilometraza')?.errors?.['required']">Kilometraza je obavezno polje</small>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="cenaPoDanu" class="form-label">Cena po danu</label>
+                <input type="number" class="form-control" formControlName="cenaPoDanu" id="cenaPoDanu" placeholder="Unesite cenu po danu" required/>
+                <div *ngIf="automobilForm.get('cenaPoDanu')?.invalid && (automobilForm.get('cenaPoDanu')?.touched || automobilForm.get('cenaPoDanu')?.dirty)">
+                    <small class="text-danger" *ngIf="automobilForm.get('cenaPoDanu')?.errors?.['required']">Cena po danu je obavezno polje</small>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="opis" class="form-label">Opis</label>
+                <textarea rows="3" class="form-control" formControlName="opis" id="opis" placeholder="Unesite opis"  required ></textarea>
+                <div *ngIf="automobilForm.get('opis')?.invalid && (automobilForm.get('opis')?.touched || automobilForm.get('opis')?.dirty)">
+                    <small class="text-danger" *ngIf="automobilForm.get('opis')?.errors?.['required']">OPis je obavezno polje</small>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="brojVrata" class="form-label">Broj vrata</label>
+                <input type="number" class="form-control" formControlName="brojVrata" id="brojVrata" placeholder="Unesite brojVrata" required/>
+                <div *ngIf="automobilForm.get('brojVrata')?.invalid && (automobilForm.get('brojVrata')?.touched || automobilForm.get('brojVrata')?.dirty)">
+                    <small class="text-danger" *ngIf="automobilForm.get('brojVrata')?.errors?.['required']">Broj vrata je obavezno polje</small>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="brojSedista" class="form-label">Broj sedista</label>
+                <input type="number" class="form-control" formControlName="brojSedista" id="brojSedista" placeholder="Unesite broj sedista " required/>
+                <div *ngIf="automobilForm.get('brojSedista')?.invalid && (automobilForm.get('brojSedista')?.touched || automobilForm.get('brojSedista')?.dirty)">
+                    <small class="text-danger" *ngIf="automobilForm.get('brojSedista')?.errors?.['required']">Broj sedista je obavezno polje</small>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="tipGoriva" class="form-label">Tip goriva</label>
+                <select class="form-control" formControlName="tipGoriva" id="tipGoriva" required="">
+                    <option value="" disabled selected>Izaberite gorivo</option>
+                    <option value="BENZIN">BENZIN</option>
+                    <option value="DIZEL">DIZEL</option>
+                    <option value="PLIN">PLIN</option>
+                    <option value="STRUJA">STRUJA</option>
+                </select>
+                <div *ngIf="automobilForm.get('tipGoriva')?.invalid && (automobilForm.get('tipGoriva')?.touched || automobilForm.get('tipGoriva')?.dirty)">
+                    <small class="text-danger" *ngIf="automobilForm.get('tipGoriva')?.errors?.['required']">Tip goriva je obavezno polje</small>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="vrstaAutomobila" class="form-label">Vrsta automobila</label>
+                <select class="form-control" formControlName="vrstaAutomobila" id="vrstaAutomobila" required="">
+                    <option value="" disabled selected>Izaberite vrstu automobila</option>
+                    <option value="DZIP">DZIP</option>
+                    <option value="LIMUZINA">LIMUZINA</option>
+                    <option value="KARAVAN">KARAVAN</option>
+                    <option value="KABRIOLET">KABRIOLET</option>
+                </select>
+                <div *ngIf="automobilForm.get('tipGoriva')?.invalid && (automobilForm.get('vrstaAutomobila')?.touched || automobilForm.get('vrstaAutomobila')?.dirty)">
+                    <small class="text-danger" *ngIf="automobilForm.get('vrstaAutomobila')?.errors?.['required']">Vrsta automobila je obavezno polje</small>
+                </div>
+            </div>
+
+
+          </form>
+          <form [formGroup]="motorForm" *ngIf="flag==1 && tipVozila=='MOTOR'">
+            <div class="form-group">
+                <label for="model" class="form-label">Model</label>
+                <input type="text" class="form-control" formControlName="model" id="model" placeholder="Unesite model" required/>
+                <div *ngIf="motorForm.get('model')?.invalid && (motorForm.get('model')?.touched || motorForm.get('model')?.dirty)">
+                    <small class="text-danger" *ngIf="motorForm.get('model')?.errors?.['required']">Model je obavezno polje</small>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="brend" class="form-label">Brend</label>
+                <input type="text" class="form-control" formControlName="brend" id="brend" placeholder="Unesite  brend" required/>
+                <div *ngIf="motorForm.get('brend')?.invalid && (motorForm.get('brend')?.touched || motorForm.get('brend')?.dirty)">
+                    <small class="text-danger" *ngIf="motorForm.get('brend')?.errors?.['required']">Brend je obavezno polje</small>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="godinaProizvodnje" class="form-label">Godina proizvodnje</label>
+                <input type="number" class="form-control" formControlName="godinaProizvodnje" id="godinaProizvodnje" placeholder="Unesite godinu proizvodnje" required/>
+                <div *ngIf="motorForm.get('godinaProizvodnje')?.invalid && (motorForm.get('godinaProizvodnje')?.touched || motorForm.get('godinaProizvodnje')?.dirty)">
+                    <small class="text-danger" *ngIf="motorForm.get('godinaProizvodnje')?.errors?.['required']">Godina proizvodnje je obavezno polje</small>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="kilometraza" class="form-label">Kilometraza</label>
+                <input type="number" class="form-control" formControlName="kilometraza" id="kilometraza" placeholder="Unesite kilometrazu" required/>
+                <div *ngIf="motorForm.get('kilometraza')?.invalid && (motorForm.get('kilometraza')?.touched ||motorForm.get('kilometraza')?.dirty)">
+                    <small class="text-danger" *ngIf="motorForm.get('kilometraza')?.errors?.['required']">Kilometraza je obavezno polje</small>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="cenaPoDanu" class="form-label">Cena po danu</label>
+                <input type="number" class="form-control" formControlName="cenaPoDanu" id="cenaPoDanu" placeholder="Unesite cenu po danu" required/>
+                <div *ngIf="motorForm.get('cenaPoDanu')?.invalid && (motorForm.get('cenaPoDanu')?.touched || motorForm.get('cenaPoDanu')?.dirty)">
+                    <small class="text-danger" *ngIf="motorForm.get('cenaPoDanu')?.errors?.['required']">Cena po danu je obavezno polje</small>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="opis" class="form-label">Opis</label>
+                <textarea rows="3" class="form-control" formControlName="opis" id="opis" placeholder="Unesite opis"  required ></textarea>
+                <div *ngIf="motorForm.get('opis')?.invalid && (motorForm.get('opis')?.touched || motorForm.get('opis')?.dirty)">
+                    <small class="text-danger" *ngIf="motorForm.get('opis')?.errors?.['required']">OPis je obavezno polje</small>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="brojCilindara" class="form-label">Broj cilindara</label>
+                <input type="number" class="form-control" formControlName="brojCilindara" id="brojCilindara" placeholder="Unesite brojCilindara" required/>
+                <div *ngIf="motorForm.get('brojCilindara')?.invalid && (motorForm.get('brojCilindara')?.touched || motorForm.get('brojCilindara')?.dirty)">
+                    <small class="text-danger" *ngIf="motorForm.get('brojCilindara')?.errors?.['required']">Broj cilindara je obavezno polje</small>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="brojTockova" class="form-label">Broj tockova</label>
+                <input type="number" class="form-control" formControlName="brojTockova" id="brojTockova" placeholder="Unesite broj tockova " required/>
+                <div *ngIf="motorForm.get('brojTockova')?.invalid && (motorForm.get('brojTockova')?.touched || motorForm.get('brojTockova')?.dirty)">
+                    <small class="text-danger" *ngIf="motorForm.get('brojTockova')?.errors?.['required']">Broj tockova je obavezno polje</small>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="tipMotora" class="form-label">Tip motora</label>
+                <select class="form-control" formControlName="tipMotora" id="tipMotora" required="">
+                    <option value="" disabled selected>Izaberite tip motora</option>
+                    <option value="SPORTSKI">SPORTSKI</option>
+                    <option value="GRADSKI">GRADSKI</option>
+                    <option value="PUTNICKI">PUTNICKI</option>
+                </select>
+                <div *ngIf="motorForm.get('tipMotora')?.invalid && (motorForm.get('tipMotora')?.touched || motorForm.get('tipMotora')?.dirty)">
+                    <small class="text-danger" *ngIf="motorForm.get('tipMotora')?.errors?.['required']">Tip motora je obavezno polje</small>
+                </div>
+            </div>
+
+
+          </form>
+          <form [formGroup]="camacForm" *ngIf="flag==1 && tipVozila=='CAMAC'">
+            <div class="form-group">
+                <label for="model" class="form-label">Model</label>
+                <input type="text" class="form-control" formControlName="model" id="model" placeholder="Unesite model" required/>
+                <div *ngIf="camacForm.get('model')?.invalid && (camacForm.get('model')?.touched || camacForm.get('model')?.dirty)">
+                    <small class="text-danger" *ngIf="camacForm.get('model')?.errors?.['required']">Model je obavezno polje</small>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="brend" class="form-label">Brend</label>
+                <input type="text" class="form-control" formControlName="brend" id="brend" placeholder="Unesite  brend" required/>
+                <div *ngIf="camacForm.get('brend')?.invalid && (camacForm.get('brend')?.touched || camacForm.get('brend')?.dirty)">
+                    <small class="text-danger" *ngIf="camacForm.get('brend')?.errors?.['required']">Brend je obavezno polje</small>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="godinaProizvodnje" class="form-label">Godina proizvodnje</label>
+                <input type="number" class="form-control" formControlName="godinaProizvodnje" id="godinaProizvodnje" placeholder="Unesite godinu proizvodnje" required/>
+                <div *ngIf="camacForm.get('godinaProizvodnje')?.invalid && (camacForm.get('godinaProizvodnje')?.touched || camacForm.get('godinaProizvodnje')?.dirty)">
+                    <small class="text-danger" *ngIf="camacForm.get('godinaProizvodnje')?.errors?.['required']">Godina proizvodnje je obavezno polje</small>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="kilometraza" class="form-label">Kilometraza</label>
+                <input type="number" class="form-control" formControlName="kilometraza" id="kilometraza" placeholder="Unesite kilometrazu" required/>
+                <div *ngIf="camacForm.get('kilometraza')?.invalid && (camacForm.get('kilometraza')?.touched ||camacForm.get('kilometraza')?.dirty)">
+                    <small class="text-danger" *ngIf="camacForm.get('kilometraza')?.errors?.['required']">Kilometraza je obavezno polje</small>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="cenaPoDanu" class="form-label">Cena po danu</label>
+                <input type="number" class="form-control" formControlName="cenaPoDanu" id="cenaPoDanu" placeholder="Unesite cenu po danu" required/>
+                <div *ngIf="camacForm.get('cenaPoDanu')?.invalid && (camacForm.get('cenaPoDanu')?.touched || camacForm.get('cenaPoDanu')?.dirty)">
+                    <small class="text-danger" *ngIf="camacForm.get('cenaPoDanu')?.errors?.['required']">Cena po danu je obavezno polje</small>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="opis" class="form-label">Opis</label>
+                <textarea rows="3" class="form-control" formControlName="opis" id="opis" placeholder="Unesite opis"  required ></textarea>
+                <div *ngIf="camacForm.get('opis')?.invalid && (camacForm.get('opis')?.touched || camacForm.get('opis')?.dirty)">
+                    <small class="text-danger" *ngIf="camacForm.get('opis')?.errors?.['required']">OPis je obavezno polje</small>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="duzina" class="form-label">Duzina</label>
+                <input type="number" class="form-control" formControlName="duzina" id="duzina" placeholder="Unesite duzinu" required/>
+                <div *ngIf="camacForm.get('duzina')?.invalid && (camacForm.get('duzina')?.touched || camacForm.get('duzina')?.dirty)">
+                    <small class="text-danger" *ngIf="camacForm.get('duzina')?.errors?.['required']">Duzina je obavezno polje</small>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="tipCamca" class="form-label">Tip camca</label>
+                <select class="form-control" formControlName="tipCamca" id="tipCamca" required="">
+                    <option value="" disabled selected>Izaberite tip camca</option>
+                    <option value="JEDRILICA">JEDRILICA</option>
+                    <option value="JAHTA">JAHTA</option>
+                    <option value="CAMAC">CAMAC</option>
+                    <option value="GLISER">GLISER</option>
+                </select>
+                <div *ngIf="camacForm.get('tipCamca')?.invalid && (camacForm.get('tipCamca')?.touched || camacForm.get('tipCamca')?.dirty)">
+                    <small class="text-danger" *ngIf="camacForm.get('tipCamca')?.errors?.['required']">Tip camca je obavezno polje</small>
+                </div>
+            </div>
+
+
+
+          </form>
+        </div>
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-secondary ms-auto" (click)="closeDialog()">Odustani</button>
+          <button type="button" class="btn btn-danger" *ngIf="flag==1 && tipVozila=='AUTOMOBIL'" (click)="izmenaAutomobila()">Potvrdi izmenu automobila</button>
+          <button type="button" class="btn btn-danger" *ngIf="flag==1 && tipVozila=='MOTOR'" (click)="izmenaMotora()">Potvrdi izmenu motora</button>
+          <button type="button" class="btn btn-danger" *ngIf="flag==1 && tipVozila=='CAMAC'" (click)="izmenaCamca()">Potvrdi izmenu camca</button>
+          <button type="button" class="btn btn-danger" *ngIf="flag==2" (click)="brisanjeVozila()">Potvrdi brisanje</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="showDialog" class="modal-backdrop fade show"></div>
+
+  <div class="modal fade" [class.show]="showCreateDialog" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" [ngClass]="{'d-block': showCreateDialog}">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Kreiranje vozila</h5>
+          <button type="button" class="btn-close" (click)="closeCreateDialog()" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="vrstaVozila" class="form-label">Vrsta vozila</label>
+                <select class="form-control"  [(ngModel)]="vrstaVozila" (change)="dodelaVrsteVozila()" id="vrstaVozila" name="vrstaVozila" required="">
+                    <option value="" disabled selected>Izaberite vrstu vozila</option>
+                    <option value="Automobil">Automobil</option>
+                    <option value="Motor">Motor</option>
+                    <option value="Camac">Camac</option>
+                </select>
+            </div>
+         <form [formGroup]="voziloForm">
+
+                
+
+                <div *ngIf="vrstaVozila">
+                    <div class="form-group">
+                        <label for="model" class="form-label">Model</label>
+                        <input type="text" class="form-control" formControlName="model" id="model" placeholder="Unesite model" required/>
+                        <div *ngIf="voziloForm.get('model')?.invalid && (voziloForm.get('model')?.touched || voziloForm.get('model')?.dirty)">
+                            <small class="text-danger" *ngIf="voziloForm.get('model')?.errors?.['required']">Model je obavezno polje</small>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="brend" class="form-label">Brend</label>
+                        <input type="text" class="form-control" formControlName="brend" id="brend" placeholder="Unesite  brend" required/>
+                        <div *ngIf="voziloForm.get('brend')?.invalid && (voziloForm.get('brend')?.touched || voziloForm.get('brend')?.dirty)">
+                            <small class="text-danger" *ngIf="voziloForm.get('brend')?.errors?.['required']">Brend je obavezno polje</small>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="godinaProizvodnje" class="form-label">Godina proizvodnje</label>
+                        <input type="number" class="form-control" formControlName="godinaProizvodnje" id="godinaProizvodnje" placeholder="Unesite godinu proizvodnje" required/>
+                        <div *ngIf="voziloForm.get('godinaProizvodnje')?.invalid && (voziloForm.get('godinaProizvodnje')?.touched || voziloForm.get('godinaProizvodnje')?.dirty)">
+                            <small class="text-danger" *ngIf="voziloForm.get('godinaProizvodnje')?.errors?.['required']">Godina proizvodnje je obavezno polje</small>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="kilometraza" class="form-label">Kilometraza</label>
+                        <input type="number" class="form-control" formControlName="kilometraza" id="kilometraza" placeholder="Unesite kilometrazu" required/>
+                        <div *ngIf="voziloForm.get('kilometraza')?.invalid && (voziloForm.get('kilometraza')?.touched ||voziloForm.get('kilometraza')?.dirty)">
+                            <small class="text-danger" *ngIf="voziloForm.get('kilometraza')?.errors?.['required']">Kilometraza je obavezno polje</small>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="cenaPoDanu" class="form-label">Cena po danu</label>
+                        <input type="number" class="form-control" formControlName="cenaPoDanu" id="cenaPoDanu" placeholder="Unesite cenu po danu" required/>
+                        <div *ngIf="voziloForm.get('cenaPoDanu')?.invalid && (voziloForm.get('cenaPoDanu')?.touched || voziloForm.get('cenaPoDanu')?.dirty)">
+                            <small class="text-danger" *ngIf="voziloForm.get('cenaPoDanu')?.errors?.['required']">Cena po danu je obavezno polje</small>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="opis" class="form-label">Opis</label>
+                        <textarea rows="3" class="form-control" formControlName="opis" id="opis" placeholder="Unesite opis"  required ></textarea>
+                        <div *ngIf="voziloForm.get('opis')?.invalid && (voziloForm.get('opis')?.touched || voziloForm.get('opis')?.dirty)">
+                            <small class="text-danger" *ngIf="voziloForm.get('opis')?.errors?.['required']">Opis je obavezno polje</small>
+                        </div>
+                    </div>
+
+                    <div *ngIf="vrstaVozila=='Automobil'">
+                        <div class="form-group">
+                            <label for="brojVrata" class="form-label">Broj vrata</label>
+                            <input type="number" class="form-control" formControlName="brojVrata" id="brojVrata" placeholder="Unesite brojVrata" required/>
+                            <div *ngIf="voziloForm.get('brojVrata')?.invalid && (voziloForm.get('brojVrata')?.touched || voziloForm.get('brojVrata')?.dirty)">
+                                <small class="text-danger" *ngIf="voziloForm.get('brojVrata')?.errors?.['required']">Broj vrata je obavezno polje</small>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="brojSedista" class="form-label">Broj sedista</label>
+                            <input type="number" class="form-control" formControlName="brojSedista" id="brojSedista" placeholder="Unesite broj sedista " required/>
+                            <div *ngIf="voziloForm.get('brojSedista')?.invalid && (voziloForm.get('brojSedista')?.touched || voziloForm.get('brojSedista')?.dirty)">
+                                <small class="text-danger" *ngIf="voziloForm.get('brojSedista')?.errors?.['required']">Broj sedista je obavezno polje</small>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="tipGoriva" class="form-label">Tip goriva</label>
+                            <select class="form-control" formControlName="tipGoriva" id="tipGoriva" required="">
+                                <option value="" disabled selected>Izaberite gorivo</option>
+                                <option value="BENZIN">BENZIN</option>
+                                <option value="DIZEL">DIZEL</option>
+                                <option value="PLIN">PLIN</option>
+                                <option value="STRUJA">STRUJA</option>
+                            </select>
+                            <div *ngIf="voziloForm.get('tipGoriva')?.invalid && (voziloForm.get('tipGoriva')?.touched || voziloForm.get('tipGoriva')?.dirty)">
+                                <small class="text-danger" *ngIf="voziloForm.get('tipGoriva')?.errors?.['required']">Tip goriva je obavezno polje</small>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="vrstaAutomobila" class="form-label">Vrsta automobila</label>
+                            <select class="form-control" formControlName="vrstaAutomobila" id="vrstaAutomobila" required="">
+                                <option value="" disabled selected>Izaberite vrstu automobila</option>
+                                <option value="DZIP">DZIP</option>
+                                <option value="LIMUZINA">LIMUZINA</option>
+                                <option value="KARAVAN">KARAVAN</option>
+                                <option value="KABRIOLET">KABRIOLET</option>
+                            </select>
+                            <div *ngIf="voziloForm.get('tipGoriva')?.invalid && (voziloForm.get('vrstaAutomobila')?.touched || voziloForm.get('vrstaAutomobila')?.dirty)">
+                                <small class="text-danger" *ngIf="voziloForm.get('vrstaAutomobila')?.errors?.['required']">Vrsta automobila je obavezno polje</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div *ngIf="vrstaVozila=='Motor'">
+                        <div class="form-group">
+                            <label for="brojCilindara" class="form-label">Broj cilindara</label>
+                            <input type="number" class="form-control" formControlName="brojCilindara" id="brojCilindara" placeholder="Unesite brojCilindara" required/>
+                            <div *ngIf="voziloForm.get('brojCilindara')?.invalid && (voziloForm.get('brojCilindara')?.touched || voziloForm.get('brojCilindara')?.dirty)">
+                                <small class="text-danger" *ngIf="voziloForm.get('brojCilindara')?.errors?.['required']">Broj cilindara je obavezno polje</small>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="brojTockova" class="form-label">Broj tockova</label>
+                            <input type="number" class="form-control" formControlName="brojTockova" id="brojTockova" placeholder="Unesite broj tockova " required/>
+                            <div *ngIf="voziloForm.get('brojTockova')?.invalid && (voziloForm.get('brojTockova')?.touched || voziloForm.get('brojTockova')?.dirty)">
+                                <small class="text-danger" *ngIf="voziloForm.get('brojTockova')?.errors?.['required']">Broj tockova je obavezno polje</small>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="tipMotora" class="form-label">Tip motora</label>
+                            <select class="form-control" formControlName="tipMotora" id="tipMotora" required="">
+                                <option value="" disabled selected>Izaberite tip motora</option>
+                                <option value="SPORTSKI">SPORTSKI</option>
+                                <option value="GRADSKI">GRADSKI</option>
+                                <option value="PUTNICKI">PUTNICKI</option>
+                            </select>
+                            <div *ngIf="voziloForm.get('tipMotora')?.invalid && (voziloForm.get('tipMotora')?.touched || voziloForm.get('tipMotora')?.dirty)">
+                                <small class="text-danger" *ngIf="voziloForm.get('tipMotora')?.errors?.['required']">Tip motora je obavezno polje</small>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div *ngIf="vrstaVozila=='Camac'">
+                        <div class="form-group">
+                            <label for="duzina" class="form-label">Duzina</label>
+                            <input type="number" class="form-control" formControlName="duzina" id="duzina" placeholder="Unesite duzinu" required />
+                            <div *ngIf="voziloForm.get('duzina')?.invalid && (voziloForm.get('duzina')?.touched || voziloForm.get('duzina')?.dirty)">
+                                <small class="text-danger" *ngIf="voziloForm.get('duzina')?.errors?.['required']">Duzina je obavezno polje</small>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="tipCamca" class="form-label">Tip camca</label>
+                            <select class="form-control" formControlName="tipCamca" id="tipCamca" required>
+                                <option value="" disabled selected>Izaberite tip camca</option>
+                                <option value="JEDRILICA">JEDRILICA</option>
+                                <option value="JAHTA">JAHTA</option>
+                                <option value="CAMAC">CAMAC</option>
+                                <option value="GLISER">GLISER</option>
+                            </select>
+                            <div *ngIf="voziloForm.get('tipCamca')?.invalid && (voziloForm.get('tipCamca')?.touched || voziloForm.get('tipCamca')?.dirty)">
+                                <small class="text-danger" *ngIf="voziloForm.get('tipCamca')?.errors?.['required']">Tip camca je obavezno polje</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    
+         </form>
+         </div>
+
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-secondary ms-auto" (click)="closeCreateDialog()">Odustani</button>
+          <button type="button" class="btn btn-success" (click)="createVozilo()">Kreiraj vozilo</button>
+
+        </div>
+
+    </div>
+    </div>
+    </div>
+
+
+  <div *ngIf="showCreateDialog" class="modal-backdrop fade show"></div>
+  </div>
 <app-footer></app-footer>
 
