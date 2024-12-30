@@ -25,5 +25,4 @@ public class Automobil extends  Vozilo {
     @Enumerated(EnumType.STRING)
     private VrstaAutomobila vrstaAutomobila;
 
-
 }
