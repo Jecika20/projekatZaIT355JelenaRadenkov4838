@@ -46,4 +46,5 @@ public class Vozilo {
     @OneToMany(mappedBy = "vozilo", fetch = FetchType.LAZY, cascade = CascadeType.ALL )
     private Set<SlikeVozila> slikeVozila;
 
+
 }
