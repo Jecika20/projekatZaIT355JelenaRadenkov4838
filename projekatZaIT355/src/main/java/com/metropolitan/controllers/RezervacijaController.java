@@ -1,6 +1,7 @@
 package com.metropolitan.controllers;
 
 import com.metropolitan.dtos.RezervacijaDTO;
+import com.metropolitan.dtos.StatistikaRezervacijaVozilaDTO;
 import com.metropolitan.models.Rezervacija;
 import com.metropolitan.services.RezervacijaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,5 +68,11 @@ public class RezervacijaController {
               return ResponseEntity.ok(rezervacija);
           }
          return ResponseEntity.notFound().build();
+      }
+    @PreAuthorize("hasAuthority('ADMIN')")
+      @GetMapping("/statistika")
+        public ResponseEntity<List<StatistikaRezervacijaVozilaDTO>> getStatistika(){
+        List<StatistikaRezervacijaVozilaDTO>  statistika= rezervacijaService.getStatistikaPoVoziluIStatusu();
+        return ResponseEntity.ok(statistika);
       }
 }

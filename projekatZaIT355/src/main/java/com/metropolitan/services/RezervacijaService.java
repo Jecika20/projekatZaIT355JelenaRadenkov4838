@@ -1,6 +1,7 @@
 package com.metropolitan.services;
 
 import com.metropolitan.dtos.RezervacijaDTO;
+import com.metropolitan.dtos.StatistikaRezervacijaVozilaDTO;
 import com.metropolitan.enums.StatusRezervacije;
 import com.metropolitan.enums.StatusVozila;
 import com.metropolitan.models.Korisnik;
@@ -93,5 +94,8 @@ public class RezervacijaService {
         rezervacija.getVozilo().setStatusVozila(StatusVozila.DOSTUPAN);
         rezervacijaRepository.delete(rezervacija);
         return rezervacija;
+    }
+    public List<StatistikaRezervacijaVozilaDTO> getStatistikaPoVoziluIStatusu(){
+       return rezervacijaRepository.brojRezervacijaPoStatusuIVozilu();
     }
 }
