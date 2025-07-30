@@ -78,7 +78,7 @@ public class VoziloControllerIntegrationTest {
 
 
         assertNotNull(response.getBody());
-        
+
     }
 
 }
