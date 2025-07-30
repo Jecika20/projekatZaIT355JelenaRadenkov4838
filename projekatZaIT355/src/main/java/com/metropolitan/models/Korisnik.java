@@ -16,6 +16,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Korisnik {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)

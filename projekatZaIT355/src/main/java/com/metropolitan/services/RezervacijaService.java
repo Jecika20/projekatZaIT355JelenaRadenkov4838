@@ -5,9 +5,11 @@ import com.metropolitan.dtos.StatistikaRezervacijaVozilaDTO;
 import com.metropolitan.enums.StatusRezervacije;
 import com.metropolitan.enums.StatusVozila;
 import com.metropolitan.models.Korisnik;
+import com.metropolitan.models.Radnik;
 import com.metropolitan.models.Rezervacija;
 import com.metropolitan.models.Vozilo;
 import com.metropolitan.repositories.KorisnikRepository;
+import com.metropolitan.repositories.RadnikRepository;
 import com.metropolitan.repositories.RezervacijaRepository;
 import com.metropolitan.repositories.VoziloRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,8 @@ public class RezervacijaService {
     @Autowired
     private KorisnikRepository korisnikRepository;
 
+    @Autowired
+    private RadnikRepository radnikRepository;
     public List<Rezervacija> getAll() {
         return rezervacijaRepository.findAll();
     }
@@ -97,5 +101,13 @@ public class RezervacijaService {
     }
     public List<StatistikaRezervacijaVozilaDTO> getStatistikaPoVoziluIStatusu(){
        return rezervacijaRepository.brojRezervacijaPoStatusuIVozilu();
+    }
+    public List<Rezervacija> getRezervacijeByRadnikSalona(){
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        Radnik radnik = radnikRepository.findByEmail(email);
+        if(radnik == null){
+            return null;
+        }
+        return rezervacijaRepository.findByVoziloSalon(radnik.getSalon());
     }
 }

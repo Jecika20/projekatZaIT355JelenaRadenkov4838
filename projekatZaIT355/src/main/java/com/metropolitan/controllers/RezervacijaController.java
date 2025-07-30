@@ -24,7 +24,7 @@ public class RezervacijaController {
         return ResponseEntity.ok(rezervacije);
     }
 
-    @PreAuthorize("hasAnyAuthority('ADMIN','KLIJENT')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','KLIJENT','RADNIK')")
     @GetMapping("/byKorisnik")
     public ResponseEntity<List<Rezervacija>> getAllByKorisnik() {
         List<Rezervacija> rezervacije = rezervacijaService.getRezervacijeByKorisnik();
@@ -41,7 +41,7 @@ public class RezervacijaController {
         return ResponseEntity.badRequest().build();
       }
 
-      @PreAuthorize("hasAuthority('ADMIN')")
+      @PreAuthorize("hasAnyAuthority('ADMIN','RADNIK')")
       @GetMapping("/statusToZavrseno/{id}")
       public ResponseEntity<Rezervacija> changeStatusToZavrseno(@PathVariable int id){
           Rezervacija rezervacija= rezervacijaService.statusToZavrseno(id);
@@ -50,7 +50,7 @@ public class RezervacijaController {
           }
           return ResponseEntity.notFound().build();
       }
-      @PreAuthorize("hasAnyAuthority('ADMIN','KLIJENT')")
+      @PreAuthorize("hasAnyAuthority('ADMIN','KLIJENT','RADNIK')")
       @GetMapping("/statusToOtkazano/{id}")
       public ResponseEntity<Rezervacija> changeStatusToOtkazano(@PathVariable int id){
           Rezervacija rezervacija= rezervacijaService.statusToOtkazano(id);
@@ -60,7 +60,7 @@ public class RezervacijaController {
           return ResponseEntity.notFound().build();
       }
 
-     @PreAuthorize("hasAuthority('ADMIN')")
+     @PreAuthorize("hasAnyAuthority('ADMIN','RADNIK')")
      @DeleteMapping("/{id}")
       public ResponseEntity<Rezervacija> deleteRezervacija(@PathVariable int id){
           Rezervacija rezervacija = rezervacijaService.deleteRezervacija(id);
@@ -75,4 +75,10 @@ public class RezervacijaController {
         List<StatistikaRezervacijaVozilaDTO>  statistika= rezervacijaService.getStatistikaPoVoziluIStatusu();
         return ResponseEntity.ok(statistika);
       }
+    @PreAuthorize("hasAuthority('RADNIK')")
+    @GetMapping("/byKorisnik")
+    public ResponseEntity<List<Rezervacija>> getByRadnikSalon() {
+        List<Rezervacija> rezervacije = rezervacijaService.getRezervacijeByRadnikSalona();
+        return ResponseEntity.ok(rezervacije);
+    }
 }

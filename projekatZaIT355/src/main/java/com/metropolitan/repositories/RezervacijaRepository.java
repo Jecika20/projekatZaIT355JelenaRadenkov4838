@@ -3,6 +3,7 @@ package com.metropolitan.repositories;
 import com.metropolitan.dtos.StatistikaRezervacijaVozilaDTO;
 import com.metropolitan.models.Korisnik;
 import com.metropolitan.models.Rezervacija;
+import com.metropolitan.models.Salon;
 import com.metropolitan.models.Vozilo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -21,5 +22,7 @@ public interface RezervacijaRepository extends JpaRepository<Rezervacija, Intege
             "group by r.vozilo,r.statusRezervacije " +
             "order by r.vozilo.id")
     List<StatistikaRezervacijaVozilaDTO> brojRezervacijaPoStatusuIVozilu();
+
+    List<Rezervacija> findByVoziloSalon(Salon salon);
 
 }
