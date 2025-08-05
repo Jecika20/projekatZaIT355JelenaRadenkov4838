@@ -76,7 +76,7 @@ public class RezervacijaController {
         return ResponseEntity.ok(statistika);
       }
     @PreAuthorize("hasAuthority('RADNIK')")
-    @GetMapping("/byKorisnik")
+    @GetMapping("/byRadnikSalon")
     public ResponseEntity<List<Rezervacija>> getByRadnikSalon() {
         List<Rezervacija> rezervacije = rezervacijaService.getRezervacijeByRadnikSalona();
         return ResponseEntity.ok(rezervacije);

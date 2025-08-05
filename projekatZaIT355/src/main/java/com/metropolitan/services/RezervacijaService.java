@@ -90,6 +90,7 @@ public class RezervacijaService {
         return rezervacijaRepository.save(rezervacija);
     }
 
+
     public Rezervacija deleteRezervacija(int id) {
         Rezervacija rezervacija = rezervacijaRepository.findById(id);
         if(rezervacija == null){

@@ -1,5 +1,5 @@
 package com.metropolitan.enums;
 
 public enum StatusRezervacije {
-    AKTIVNA,ZAVRSENA,OTKAZANA
+    AKTIVNA,ZAVRSENA,OTKAZANA,OBRADA
 }

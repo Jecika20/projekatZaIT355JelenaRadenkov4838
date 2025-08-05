@@ -1,3 +1,4 @@
+import { Recenzija } from "../Recenzija/recenzija";
 import { Salon } from "../Salon/salon";
 import { SlikeVozila } from "../SlikeVozila/slike-vozila";
 
@@ -13,6 +14,7 @@ export class Vozilo {
     opis:string;
     salon: Salon;
     slikeVozila: SlikeVozila[];
+    recenzija: Recenzija[];
 
     //dodatno za automobil
     brojVrata: number;

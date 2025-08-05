@@ -6,6 +6,8 @@ import moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
 import { RezervacijaService } from '../../services/Rezervacija/rezervacija.service';
 import { Rezervacija } from '../../models/Rezervacija/rezervacija';
+import { Recenzija } from '../../models/Recenzija/recenzija';
+import { RecenzijaService } from '../../services/Recenzija/recenzija.service';
 
 @Component({
   selector: 'app-detaljnije-vozila',
@@ -23,8 +25,12 @@ export class DetaljnijeVozilaComponent implements OnInit {
   cenaPoDanu: number;
   rezervacija:Rezervacija = new Rezervacija();
   cena: number;
+  aktivneRecenzije: Recenzija[] = [];
+  recenzijaForm: FormGroup;
+  showRecenzijaModal=false;
   constructor(private voziloService : VoziloService, private route:ActivatedRoute, private router: Router,
-     private formBuilder: FormBuilder, private toastr: ToastrService, private rezervacijaService:RezervacijaService ){}
+     private formBuilder: FormBuilder, private toastr: ToastrService, private rezervacijaService:RezervacijaService,
+    private recenzijaService: RecenzijaService){}
   ngOnInit(): void {
     this.id = this.route.snapshot.params['id'];
     this.uloga = sessionStorage.getItem("uloga");
@@ -33,8 +39,10 @@ export class DetaljnijeVozilaComponent implements OnInit {
       next: (res:any)=>{
         this.vozilo=res;
         console.log(this.vozilo);
+        this.aktivneRecenzije= this.vozilo.recenzija.filter((r: Recenzija) => r.aktivna);
       }
     });
+    
     this.vremeForm= this.formBuilder.group({
       vremeOd: ['',[Validators.required]],
       vremeDo: ['',[Validators.required]],
@@ -42,6 +50,10 @@ export class DetaljnijeVozilaComponent implements OnInit {
     });
     this.vremeForm.valueChanges.subscribe(()=> {
       this.racunanjeUkupneCene();
+    });
+    this.recenzijaForm= this.formBuilder.group({
+      ocena: ['',[Validators.required,Validators.min(1),Validators.max(5)]],
+      komentar:['',[Validators.required]]
     })
   }
 
@@ -93,7 +105,37 @@ export class DetaljnijeVozilaComponent implements OnInit {
     }
   }
 
+  createRecenzija(){
+    if(this.recenzijaForm.invalid){
+      this.recenzijaForm.markAllAsTouched();
+      return;
+    }
+    const novaRecenzija= {
+      komentar: this.recenzijaForm.value.komentar,
+      ocena: this.recenzijaForm.value.ocena,
+      vozilo_id: Number(this.vozilo.id),
+      aktivna: false
+    };
 
-  
+    this.recenzijaService.kreirajRecenziju(novaRecenzija).subscribe({
+      next: (res: any)=>{
+        this.toastr.success("Uspesno kreirana recenzija, ceka se potvrda");
+        this.closeRecenzijaModal();
+      },
+      error: (err: any)=>{
+        this.toastr.error("Doslo je do greske, da bi ste kreirali recenziju morate imati rezervaciju za ovo vozilo");
+        this.closeRecenzijaModal();
+      }
+    })
+  }
+  openRecenzijaModal() {
+    this.showRecenzijaModal = true;
+  }
 
+  closeRecenzijaModal(event?: MouseEvent) {
+    if (!event || (event.target as HTMLElement).classList.contains('modal')) {
+      this.showRecenzijaModal = false;
+      this.recenzijaForm.reset();
+    }
+  }
 }
