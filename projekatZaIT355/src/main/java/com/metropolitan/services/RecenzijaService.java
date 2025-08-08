@@ -22,7 +22,7 @@ import java.util.List;
 public class RecenzijaService {
     @Autowired
     private RecenzijaRepository recenzijaRepository;
-   @Autowired
+    @Autowired
     private KorisnikRepository korisnikRepository;
     @Autowired
     private VoziloRepository voziloRepository;
@@ -31,33 +31,37 @@ public class RecenzijaService {
     private RezervacijaRepository rezervacijaRepository;
 
 
-
-    public List<Recenzija> getAllRecenzije(){
+    public List<Recenzija> getAllRecenzije() {
         return recenzijaRepository.findAll();
     }
-    public Recenzija getRecenzijaById(int id){
-        Recenzija recenzija= recenzijaRepository.findById(id);
-        if(recenzija ==null){
+
+    public List<Recenzija> getAllRecenzijeNotActive() {
+        return recenzijaRepository.findByAktivnaIsFalse();
+    }
+
+    public Recenzija getRecenzijaById(int id) {
+        Recenzija recenzija = recenzijaRepository.findById(id);
+        if (recenzija == null) {
             return null;
         }
         return recenzija;
     }
 
-    public Recenzija createRecenzija(RecenzijaDTO recenzijaDTO){
-        String email= SecurityContextHolder.getContext().getAuthentication().getName();
-        Korisnik korisnik= korisnikRepository.findByEmail(email);
-        Vozilo vozilo= voziloRepository.findById(recenzijaDTO.getVozilo_id());
-        if(korisnik==null || vozilo==null){
+    public Recenzija createRecenzija(RecenzijaDTO recenzijaDTO) {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        Korisnik korisnik = korisnikRepository.findByEmail(email);
+        Vozilo vozilo = voziloRepository.findById(recenzijaDTO.getVozilo_id());
+        if (korisnik == null || vozilo == null) {
             return null;
         }
-        List<Rezervacija> rezervacije= rezervacijaRepository.findByKorisnikAndVozilo(korisnik,vozilo);
+        List<Rezervacija> rezervacije = rezervacijaRepository.findByKorisnikAndVozilo(korisnik, vozilo);
         if (rezervacije.isEmpty()) {
             return null;
         }
-        if(recenzijaRepository.findByKorisnikAndVozilo(korisnik,vozilo)!=null){
+        if (recenzijaRepository.findByKorisnikAndVozilo(korisnik, vozilo) != null) {
             return null;
         }
-        Recenzija recenzija= new Recenzija();
+        Recenzija recenzija = new Recenzija();
         recenzija.setAktivna(recenzijaDTO.isAktivna());
         recenzija.setKomentar(recenzijaDTO.getKomentar());
         recenzija.setVremeKreiranja(LocalDateTime.now());
@@ -66,24 +70,34 @@ public class RecenzijaService {
         recenzija.setVozilo(vozilo);
         return recenzijaRepository.save(recenzija);
     }
-    public Recenzija updateRecenzija(int id, UpdateRecenzijaDTO updaterecenzijaDTO ){
+
+    public Recenzija updateRecenzija(int id, UpdateRecenzijaDTO updaterecenzijaDTO) {
         Recenzija recenzija = recenzijaRepository.findById(id);
-        if(recenzija==null){
+        if (recenzija == null) {
             return null;
         }
 
         recenzija.setAktivna(updaterecenzijaDTO.isAktivna());
         recenzija.setKomentar(updaterecenzijaDTO.getKomentar());
         recenzija.setOcena(updaterecenzijaDTO.getOcena());
-       return recenzijaRepository.save(recenzija);
+        return recenzijaRepository.save(recenzija);
     }
-    public Recenzija deleteRecenzija(int id){
-        Recenzija recenzija= recenzijaRepository.findById(id);
-        if(recenzija==null){
+
+    public Recenzija deleteRecenzija(int id) {
+        Recenzija recenzija = recenzijaRepository.findById(id);
+        if (recenzija == null) {
             return null;
         }
         recenzijaRepository.delete(recenzija);
         return recenzija;
     }
 
+    public Recenzija aktivirajRecenziju(int recenzijaId) {
+        Recenzija recenzija = recenzijaRepository.findById(recenzijaId);
+        if (recenzija == null) {
+            return null;
+        }
+        recenzija.setAktivna(true);
+        return recenzijaRepository.save(recenzija);
+    }
 }

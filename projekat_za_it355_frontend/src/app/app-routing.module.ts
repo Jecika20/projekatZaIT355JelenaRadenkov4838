@@ -9,6 +9,7 @@ import { RegistrationComponent } from './components/registration/registration.co
 import { RezervacijeComponent } from './components/rezervacije/rezervacije.component';
 import { OnamaComponent } from './components/onama/onama.component';
 import { RezervacijeKlijenataComponent } from './components/rezervacije-klijenata/rezervacije-klijenata.component';
+import { RecenzijeComponent } from './components/recenzije/recenzije.component';
 
 const routes: Routes = [
   {
@@ -37,6 +38,9 @@ const routes: Routes = [
   },
   {
     path: 'rezervacije-klijenata',component: RezervacijeKlijenataComponent
+  },
+  {
+    path: 'recenzije',component: RecenzijeComponent
   },
   {
     path: '', redirectTo: '/home',pathMatch: 'full'

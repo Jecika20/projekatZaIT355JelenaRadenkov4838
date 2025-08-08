@@ -20,6 +20,8 @@ import { RezervacijeComponent } from './components/rezervacije/rezervacije.compo
 import { NgxPaginationModule } from 'ngx-pagination';
 import { OnamaComponent } from './components/onama/onama.component';
 import { RezervacijeKlijenataComponent } from './components/rezervacije-klijenata/rezervacije-klijenata.component';
+import { RecenzijeComponent } from './components/recenzije/recenzije.component';
+
 
 @NgModule({
   declarations: [
@@ -34,7 +36,8 @@ import { RezervacijeKlijenataComponent } from './components/rezervacije-klijenat
     RegistrationComponent,
     RezervacijeComponent,
     OnamaComponent,
-    RezervacijeKlijenataComponent
+    RezervacijeKlijenataComponent,
+    RecenzijeComponent
   ],
   imports: [
     BrowserModule,

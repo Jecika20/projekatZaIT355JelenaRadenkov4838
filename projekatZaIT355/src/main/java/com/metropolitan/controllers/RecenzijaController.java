@@ -21,6 +21,11 @@ public class RecenzijaController {
         List<Recenzija> recenzija= recenzijaService.getAllRecenzije();
         return ResponseEntity.ok(recenzija);
     }
+    @GetMapping("/noActive")
+    public ResponseEntity<List<Recenzija>> getAllRecenzijaNotActive(){
+        List<Recenzija> recenzija= recenzijaService.getAllRecenzijeNotActive();
+        return ResponseEntity.ok(recenzija);
+    }
     @GetMapping("/{id}")
     public ResponseEntity<Recenzija> getRecenzijaById(@PathVariable ("id")int id){
         Recenzija recenzija = recenzijaService.getRecenzijaById(id);
@@ -54,5 +59,14 @@ public class RecenzijaController {
         }
         return ResponseEntity.ok(recenzija);
     }
+    @GetMapping("/aktiviraj/{id}")
+    public ResponseEntity<Recenzija> aktivirajRecenziju(@PathVariable("id")int id){
+        Recenzija recenzija= recenzijaService.aktivirajRecenziju(id);
+        if(recenzija==null){
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok(recenzija);
+    }
+
 
 }

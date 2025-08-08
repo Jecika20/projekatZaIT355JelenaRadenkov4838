@@ -13,4 +13,6 @@ public interface RecenzijaRepository extends JpaRepository<Recenzija, Integer> {
     Recenzija findById(int id);
    List<Recenzija> findByAktivnaIsTrue();
    Recenzija findByKorisnikAndVozilo(Korisnik korisnik, Vozilo vozilo);
+
+    List<Recenzija> findByAktivnaIsFalse();
 }
