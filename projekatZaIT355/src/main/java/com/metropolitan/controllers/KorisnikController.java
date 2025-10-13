@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/korisnik")
 public class KorisnikController {
@@ -34,5 +36,23 @@ public class KorisnikController {
             return ResponseEntity.ok(radnik);
         }
         return ResponseEntity.badRequest().build();
+    }
+    @GetMapping("/zaposleniAdmini")
+    public ResponseEntity<List<Korisnik>> zaposleniAdmini(){
+        List<Korisnik> korisnici= korisnikService.zaposleniAdmini();
+        if(korisnici!=null){
+            return ResponseEntity.ok(korisnici);
+        }
+        return ResponseEntity.badRequest().build();
+
+    }
+    @GetMapping("/zaposleniRadnici")
+    public ResponseEntity<List<Radnik>> zaposleniRadnici(){
+        List<Radnik> radnici= korisnikService.zaposleniRadnici();
+        if(radnici!=null){
+            return ResponseEntity.ok(radnici);
+        }
+        return ResponseEntity.badRequest().build();
+
     }
 }

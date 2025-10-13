@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Service
 public class KorisnikService implements UserDetailsService {
@@ -97,5 +98,14 @@ public class KorisnikService implements UserDetailsService {
         radnik.setSifra(passwordEncoder.encode(radnikDTO.getSifra()));
         radnik.setUloga(Uloga.RADNIK);
         return radnikRepository.save(radnik);
+    }
+
+    public List<Korisnik> zaposleniAdmini() {
+        List<Korisnik> korisnici= korisnikRepository.findByUloga(Uloga.ADMIN);
+        return korisnici;
+    }
+
+    public List<Radnik> zaposleniRadnici() {
+        return radnikRepository.findAll();
     }
 }

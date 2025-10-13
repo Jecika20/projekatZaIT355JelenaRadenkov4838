@@ -1,9 +1,12 @@
 package com.metropolitan.services;
 
 import com.metropolitan.dtos.SalonDTO;
+import com.metropolitan.models.Radnik;
 import com.metropolitan.models.Salon;
+import com.metropolitan.repositories.RadnikRepository;
 import com.metropolitan.repositories.SalonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,6 +16,9 @@ public class SalonService {
 
     @Autowired
     private SalonRepository salonRepository;
+
+    @Autowired
+    private RadnikRepository radnikRepository;
 
     public List<Salon> getAllSalons() {
         return salonRepository.findAll();
@@ -41,5 +47,14 @@ public class SalonService {
         }
         salonRepository.delete(salon);
         return salon;
+    }
+
+    public Salon getSalonByRadnik() {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        Radnik radnik= radnikRepository.findByEmail(email);
+        if(radnik == null  || radnik.getSalon() == null){
+                return null;
+        }
+        return radnik.getSalon();
     }
 }

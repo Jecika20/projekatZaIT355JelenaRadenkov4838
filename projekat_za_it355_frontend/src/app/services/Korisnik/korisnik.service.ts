@@ -21,9 +21,9 @@ export class KorisnikService {
       return this.http.get(this.apiUrl + "/login", {params});
   }
    getZaposleniAdmini(): Observable<Korisnik[]>{
-    return this.http.get<Korisnik[]> (this.apiUrl+"/zaposleniAdmini");
+    return this.http.get<Korisnik[]> (this.apiUrl+"/korisnik/zaposleniAdmini");
   }
   getZaposleniRadnici(): Observable<Radnik[]>{
-    return this.http.get<Radnik[]> (this.apiUrl+"/zaposleniRadnici");
+    return this.http.get<Radnik[]> (this.apiUrl+"/korisnik/zaposleniRadnici");
   }
 }

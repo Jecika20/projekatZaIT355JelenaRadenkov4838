@@ -19,7 +19,7 @@ export class SalonService {
     return this.http.get<Salon>(this.apiUrl + '/get/' + id);
   }
   getSalonByRadnik(): Observable<Salon> {
-    return this.http.get<Salon>(this.apiUrl + '/getByRadnik');
+    return this.http.get<Salon>(this.apiUrl + '/salonByRadnik');
   }
 
 }

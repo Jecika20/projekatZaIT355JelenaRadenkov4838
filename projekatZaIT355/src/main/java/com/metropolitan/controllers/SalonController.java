@@ -51,5 +51,14 @@ public class SalonController {
         }
         return ResponseEntity.notFound().build();
     }
+    @GetMapping("/salonByRadnik")
+    public ResponseEntity<Salon> getSalonByRadnik(){
+        Salon salon= salonService.getSalonByRadnik();
+        if(salon != null){
+            return ResponseEntity.ok(salon);
+        }
+        return ResponseEntity.notFound().build();
+    }
 
-}
+    }
+
