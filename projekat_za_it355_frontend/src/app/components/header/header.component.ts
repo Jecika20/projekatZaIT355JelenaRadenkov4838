@@ -16,6 +16,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.jwtToken = sessionStorage.getItem("jwtToken");
     this.uloga = sessionStorage.getItem("uloga");
+    console.log(this.uloga);
   }
 
 
@@ -36,7 +37,9 @@ export class HeaderComponent implements OnInit {
   recenzijaKlijenata(){
     this.router.navigate(['/recenzije']);
   }
-
+  zaposleni(){
+    this.router.navigate(['/zaposleni']);
+  }
 
   odjava(){
     sessionStorage.clear();

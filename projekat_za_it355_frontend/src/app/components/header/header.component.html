@@ -43,6 +43,18 @@
                    Recenzije klijenata
                   </button>
                 </li>
+                  <li class="nav-item  mt-1 ms-2" >
+                  <button class="btn btn-warning btn-sm" (click)="zaposleni()">
+                   Zaposleni
+                  </button>
+                </li>
+              </ng-container>
+               <ng-container *ngIf="uloga == 'RADNIK'">
+                <li class="nav-item  mt-1" >
+                  <button class="btn btn-warning btn-sm" (click)="rezervacijeKlijenata()">
+                   Rezervacije klijenata
+                  </button>
+                </li>
               </ng-container>
               <li class="nav-item ms-auto mt-1" >
                 <button class="btn btn-danger btn-sm" (click)="odjava()">

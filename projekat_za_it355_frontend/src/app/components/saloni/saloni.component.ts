@@ -14,6 +14,13 @@ export class SaloniComponent implements OnInit {
   constructor(private salonService: SalonService, private router: Router){}
   
   ngOnInit(): void {
+    if(sessionStorage.getItem("uloga")=='RADNIK'){
+      this.salonService.getSalonByRadnik().subscribe({
+        next: (res:Salon)=>{
+       this.saloni= [res];
+        }
+      })
+    }
    this.salonService.getAllSaloni().subscribe({
     next: (res:Salon[])=>{
      this.saloni= res;

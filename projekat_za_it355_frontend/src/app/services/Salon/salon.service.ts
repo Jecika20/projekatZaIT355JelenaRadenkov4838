@@ -18,5 +18,8 @@ export class SalonService {
   getSalonById(id: number): Observable<Salon> {
     return this.http.get<Salon>(this.apiUrl + '/get/' + id);
   }
+  getSalonByRadnik(): Observable<Salon> {
+    return this.http.get<Salon>(this.apiUrl + '/getByRadnik');
+  }
 
 }

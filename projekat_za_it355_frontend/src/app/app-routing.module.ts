@@ -10,6 +10,7 @@ import { RezervacijeComponent } from './components/rezervacije/rezervacije.compo
 import { OnamaComponent } from './components/onama/onama.component';
 import { RezervacijeKlijenataComponent } from './components/rezervacije-klijenata/rezervacije-klijenata.component';
 import { RecenzijeComponent } from './components/recenzije/recenzije.component';
+import { ZaposleniComponent } from './components/zaposleni/zaposleni.component';
 
 const routes: Routes = [
   {
@@ -41,6 +42,9 @@ const routes: Routes = [
   },
   {
     path: 'recenzije',component: RecenzijeComponent
+  },
+   {
+    path: 'zaposleni',component: ZaposleniComponent
   },
   {
     path: '', redirectTo: '/home',pathMatch: 'full'

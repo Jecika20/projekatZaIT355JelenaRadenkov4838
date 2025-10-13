@@ -1,0 +1,141 @@
+<div class="container mt-4">
+  <h2 class="text-center mb-4">Zaposleni pregled</h2>
+
+  <!-- ===================== ADMINI ===================== -->
+  <div class="card mb-4 shadow-sm">
+    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+      <h5 class="mb-0">Admini</h5>
+      <button class="btn btn-light btn-sm" (click)="otvoriModalZaDodavanje('admin')">
+        ➕ Dodaj novog admina
+      </button>
+    </div>
+
+    <div class="card-body p-0">
+      <table class="table table-striped table-bordered mb-0">
+        <thead class="table-primary">
+          <tr>
+            <th>ID</th>
+            <th>Ime</th>
+            <th>Prezime</th>
+            <th>Email</th>
+            <th>Telefon</th>
+            <th>Grad</th>
+            <th>Akcije</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let a of admini">
+            <td>{{ a.id }}</td>
+            <td>{{ a.ime }}</td>
+            <td>{{ a.prezime }}</td>
+            <td>{{ a.email }}</td>
+            <td>{{ a.telefon }}</td>
+            <td>{{ a.grad }}</td>
+            <td class="text-center">
+              <button class="btn btn-sm btn-warning me-2" (click)="otvoriModal(a)">Izmeni</button>
+              <button class="btn btn-sm btn-danger" (click)="obrisiZaposlenog(a.id)">Obriši</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div *ngIf="admini.length === 0" class="text-center p-3 text-muted">
+        Nema dostupnih admina.
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== RADNICI ===================== -->
+  <div class="card shadow-sm">
+    <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+      <h5 class="mb-0">Radnici</h5>
+      <button class="btn btn-light btn-sm" (click)="otvoriModalZaDodavanje('radnik')">
+        ➕ Dodaj novog radnika
+      </button>
+    </div>
+
+    <div class="card-body p-0">
+      <table class="table table-striped table-bordered mb-0">
+        <thead class="table-success">
+          <tr>
+            <th>ID</th>
+            <th>Ime</th>
+            <th>Prezime</th>
+            <th>Email</th>
+            <th>Telefon</th>
+            <th>Grad</th>
+            <th>Salon</th>
+            <th>Akcije</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let r of radnici">
+            <td>{{ r.id }}</td>
+            <td>{{ r.ime }}</td>
+            <td>{{ r.prezime }}</td>
+            <td>{{ r.email }}</td>
+            <td>{{ r.telefon }}</td>
+            <td>{{ r.grad }}</td>
+            <td>{{ r.salon.naziv || '-' }}</td>
+            <td class="text-center">
+              <button class="btn btn-sm btn-warning me-2" (click)="otvoriModal(r)">Izmeni</button>
+              <button class="btn btn-sm btn-danger" (click)="obrisiZaposlenog(r.id)">Obriši</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div *ngIf="radnici.length === 0" class="text-center p-3 text-muted">
+        Nema dostupnih radnika.
+      </div>
+    </div>
+  </div>
+  
+</div>
+
+<!-- ===================== MODAL ===================== -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-info text-white">
+        <h5 class="modal-title">
+          {{ izabraniZaposleni.id ? 'Izmena zaposlenog' : 'Dodavanje novog zaposlenog' }}
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Zatvori"></button>
+      </div>
+
+      <div class="modal-body">
+        <form #editForm="ngForm">
+          <div class="mb-3">
+            <label class="form-label">Ime</label>
+            <input type="text" class="form-control" [(ngModel)]="izabraniZaposleni.ime" name="ime">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Prezime</label>
+            <input type="text" class="form-control" [(ngModel)]="izabraniZaposleni.prezime" name="prezime">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-control" [(ngModel)]="izabraniZaposleni.email" name="email">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Telefon</label>
+            <input type="text" class="form-control" [(ngModel)]="izabraniZaposleni.telefon" name="telefon">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Grad</label>
+            <input type="text" class="form-control" [(ngModel)]="izabraniZaposleni.grad" name="grad">
+          </div>
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Otkaži</button>
+        <button type="button" class="btn btn-primary" (click)="sacuvajIzmene()">
+          {{ izabraniZaposleni.id ? 'Sačuvaj izmene' : 'Dodaj' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
