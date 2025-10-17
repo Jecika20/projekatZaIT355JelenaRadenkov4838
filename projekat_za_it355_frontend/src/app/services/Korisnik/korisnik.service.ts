@@ -16,6 +16,14 @@ export class KorisnikService {
     return this.http.post(this.apiUrl+"/register",korisnik);
   }
 
+  createAdmin(admin:any):Observable<Korisnik>{
+    return this.http.post<Korisnik>(this.apiUrl+ "/admin/register",admin);
+  }
+
+  createRadnik(radnik:any):Observable<Radnik>{
+     return this.http.post<Radnik>(this.apiUrl+ "/korisnik/kreiranjeRadnika",radnik);
+  }
+
   loginKorisnik(email: string, sifra: string){
       const params = new HttpParams().set('email', email).set('sifra',sifra);
       return this.http.get(this.apiUrl + "/login", {params});
@@ -25,5 +33,14 @@ export class KorisnikService {
   }
   getZaposleniRadnici(): Observable<Radnik[]>{
     return this.http.get<Radnik[]> (this.apiUrl+"/korisnik/zaposleniRadnici");
+  }
+  updateAdmin(admin:any,id:number):Observable<Korisnik>{
+    return this.http.put<Korisnik>(this.apiUrl+ "/korisnik/updateAdmin/" + id,admin);
+  }
+  updateRadnik(radnik:any,id:number):Observable<Radnik>{
+    return this.http.put<Radnik>(this.apiUrl+ "/korisnik/updateRadnik/" + id,radnik);
+  }
+  deleteKorisnik(id:number){
+    return this.http.delete(this.apiUrl + "/korisnik/" + id);
   }
 }

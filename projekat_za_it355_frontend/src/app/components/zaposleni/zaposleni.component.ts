@@ -4,6 +4,9 @@ import { Radnik } from '../../models/Radnik/radnik';
 import { KorisnikService } from '../../services/Korisnik/korisnik.service';
 // @ts-ignore
 import * as bootstrap from 'bootstrap';
+import { Salon } from '../../models/Salon/salon';
+import { SalonService } from '../../services/Salon/salon.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-zaposleni',
@@ -13,16 +16,21 @@ import * as bootstrap from 'bootstrap';
 export class ZaposleniComponent implements OnInit{
   admini: Korisnik[]= [];
   radnici: Radnik[]=[];
+  saloni: Salon[]=[];
   izabraniZaposleni: any = {};
   private modalRef: any;
   privatniTip: 'admin' | 'radnik' | null = null;
 
-  constructor(private korisnikService:KorisnikService){
+  constructor(private korisnikService:KorisnikService,
+    private salonService:SalonService,
+    private toastr: ToastrService
+  ){
 
   }
    ngOnInit(): void {
     this.loadAdmini();
     this.loadRadnici();
+    this.loadSaloni();
   }
 
   loadAdmini(){
@@ -35,9 +43,19 @@ export class ZaposleniComponent implements OnInit{
       this.radnici= data;
     });
   }
+  loadSaloni(){
+      this.salonService.getAllSaloni().subscribe((data)=>{
+      this.saloni= data;
+      });
+  }
   otvoriModal(zaposleni: any): void {
     this.izabraniZaposleni = { ...zaposleni };
     const modalElement = document.getElementById('editModal');
+    if(zaposleni.salon){
+      this.privatniTip='radnik';
+    }else{
+      this.privatniTip='admin';
+    }
     this.modalRef = new bootstrap.Modal(modalElement!);
     this.modalRef.show();
   }
@@ -49,7 +67,10 @@ export class ZaposleniComponent implements OnInit{
       prezime: '',
       email: '',
       telefon: '',
-      grad: ''
+      grad: '',
+      sifra: '',
+      adresa: '',
+      salon_id: null
     };
     const modalElement = document.getElementById('editModal');
     this.modalRef = new bootstrap.Modal(modalElement!);
@@ -57,24 +78,69 @@ export class ZaposleniComponent implements OnInit{
   }
 
   sacuvajIzmene(): void {
+    console.log(this.izabraniZaposleni);
     if (this.izabraniZaposleni.id) {
-      console.log('Izmenjen zaposleni:', this.izabraniZaposleni);
+      if(this.privatniTip==='admin'){
+        this.korisnikService.updateAdmin( this.izabraniZaposleni,this.izabraniZaposleni.id).subscribe({
+      next: () => {
+        this.toastr.success('Podaci admina uspešno ažurirani!');
+        this.modalRef.hide();
+
+        this.loadAdmini();
+      },
+      error: (err) => {
+        this.toastr.error('Greška prilikom ažuriranja admina!');
+      }
+    });
+      }else if(this.privatniTip==='radnik'){
+        this.korisnikService.updateRadnik( this.izabraniZaposleni,this.izabraniZaposleni.id).subscribe({
+      next: () => {
+        this.toastr.success('Podaci radnika uspešno ažurirani!');
+        this.modalRef.hide();
+
+        this.loadRadnici();
+      },
+      error: (err) => {
+        this.toastr.error('Greška prilikom ažuriranja radnika!');
+      }
+    });
+      }
     } else {
       if (this.privatniTip === 'admin') {
-        const noviAdmin = { ...this.izabraniZaposleni, id: this.admini.length + 1 };
-        this.admini.push(noviAdmin);
+        this.korisnikService.createAdmin(this.izabraniZaposleni).subscribe({
+          next: admin => {
+            this.admini.push(admin);
+            this.toastr.success("Uspesno kreiran admin");
+            this.modalRef.hide();
+          },
+          error: err => this.toastr.error('Greška prilikom kreiranja admina')
+        });
       } else if (this.privatniTip === 'radnik') {
-        const noviRadnik = { ...this.izabraniZaposleni, id: this.radnici.length + 1 };
-        this.radnici.push(noviRadnik);
+        this.korisnikService.createRadnik(this.izabraniZaposleni).subscribe({
+          next: radnik => {
+             this.toastr.success("Uspesno kreiran radnik");
+            this.radnici.push(radnik);
+            this.modalRef.hide();
+          },
+          error: err => this.toastr.error('Greška prilikom kreiranja radnika')
+        });
       }
     }
-    this.modalRef.hide();
   }
 
   obrisiZaposlenog(id: number): void {
     if (confirm('Da li ste sigurni da želite da obrišete zaposlenog?')) {
-      this.admini = this.admini.filter(a => a.id !== id);
-      this.radnici = this.radnici.filter(r => r.id !== id);
+      this.korisnikService.deleteKorisnik(id).subscribe({
+      next: () => {
+        this.admini = this.admini.filter(a => a.id !== id);
+        this.radnici = this.radnici.filter(r => r.id !== id);
+
+        this.toastr.success('Zaposleni je uspešno obrisan!');
+      },
+      error: (err) => {
+        this.toastr.error('Došlo je do greške pri brisanju zaposlenog!');
+      }
+    });
     }
   }
 }
