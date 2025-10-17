@@ -60,6 +60,18 @@ public class KorisnikService implements UserDetailsService {
         return korisnikRepository.save(korisnik);
     }
 
+    public Korisnik updateAdmin(int id,KorisnikDTO korisnikDTO) {
+        Korisnik korisnik=korisnikRepository.findById(id);
+        if(korisnik==null){
+            return null;
+        }
+        korisnik.setIme(korisnikDTO.getIme());
+        korisnik.setPrezime(korisnikDTO.getPrezime());
+        korisnik.setTelefon(korisnikDTO.getTelefon());
+        korisnik.setAdresa(korisnikDTO.getAdresa());
+        korisnik.setGrad(korisnikDTO.getGrad());
+        return korisnikRepository.save(korisnik);
+    }
     public Korisnik registerAdmin(KorisnikDTO korisnikDTO) {
         Korisnik admin = new Korisnik();
         admin.setIme(korisnikDTO.getIme());
@@ -90,6 +102,23 @@ public class KorisnikService implements UserDetailsService {
         Radnik radnik= new Radnik();
         radnik.setSalon(salon);
         radnik.setAdresa(radnikDTO.getAdresa());
+        radnik.setIme(radnikDTO.getIme());
+        radnik.setPrezime(radnikDTO.getPrezime());
+        radnik.setGrad(radnikDTO.getGrad());
+        radnik.setTelefon(radnikDTO.getTelefon());
+        return radnikRepository.save(radnik);
+    }
+    public Radnik updateRadnik(int id,RadnikDTO radnikDTO){
+        Salon salon= salonRepository.findById(radnikDTO.getSalon_id());
+        if(salon ==null){
+            return null;
+        }
+        Radnik radnik= radnikRepository.findById(id).orElse(null);
+        if(radnik==null){
+            return null;
+        }
+        radnik.setSalon(salon);
+        radnik.setAdresa(radnikDTO.getAdresa());
         radnik.setEmail(radnikDTO.getEmail());
         radnik.setIme(radnikDTO.getIme());
         radnik.setPrezime(radnikDTO.getPrezime());
@@ -99,6 +128,7 @@ public class KorisnikService implements UserDetailsService {
         radnik.setUloga(Uloga.RADNIK);
         return radnikRepository.save(radnik);
     }
+
 
     public List<Korisnik> zaposleniAdmini() {
         List<Korisnik> korisnici= korisnikRepository.findByUloga(Uloga.ADMIN);

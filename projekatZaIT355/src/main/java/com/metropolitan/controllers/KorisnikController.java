@@ -1,5 +1,6 @@
 package com.metropolitan.controllers;
 
+import com.metropolitan.dtos.KorisnikDTO;
 import com.metropolitan.dtos.RadnikDTO;
 import com.metropolitan.models.Korisnik;
 import com.metropolitan.models.Radnik;
@@ -54,5 +55,24 @@ public class KorisnikController {
         }
         return ResponseEntity.badRequest().build();
 
+    }
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @PutMapping("/updateRadnik/{id}")
+    public ResponseEntity<Radnik> updateRadnik(@PathVariable int id,@RequestBody RadnikDTO radnikDTO){
+        Radnik radnik= korisnikService.updateRadnik(id,radnikDTO);
+        if(radnik!=null){
+            return ResponseEntity.ok(radnik);
+        }
+        return ResponseEntity.badRequest().build();
+    }
+
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @PutMapping("/updateAdmin/{id}")
+    public ResponseEntity<Korisnik> updateAdmin(@PathVariable int id,@RequestBody KorisnikDTO korisnikDTO){
+       Korisnik korisnik= korisnikService.updateAdmin(id,korisnikDTO);
+        if(korisnik!=null){
+            return ResponseEntity.ok(korisnik);
+        }
+        return ResponseEntity.badRequest().build();
     }
 }
