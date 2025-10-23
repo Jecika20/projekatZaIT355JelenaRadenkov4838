@@ -22,4 +22,10 @@ export class SalonService {
     return this.http.get<Salon>(this.apiUrl + '/salonByRadnik');
   }
 
+  createSalon(salon:any): Observable<Salon>{
+      return this.http.post<Salon>(this.apiUrl,salon);
+  }
+  deleteSalon(id: number) {
+  return this.http.delete(`${this.apiUrl}/${id}`);
+}
 }

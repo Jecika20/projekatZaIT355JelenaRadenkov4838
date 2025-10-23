@@ -11,6 +11,7 @@ import { OnamaComponent } from './components/onama/onama.component';
 import { RezervacijeKlijenataComponent } from './components/rezervacije-klijenata/rezervacije-klijenata.component';
 import { RecenzijeComponent } from './components/recenzije/recenzije.component';
 import { ZaposleniComponent } from './components/zaposleni/zaposleni.component';
+import { authGuard } from './auth/auth.guard';
 
 const routes: Routes = [
   {
@@ -32,19 +33,24 @@ const routes: Routes = [
     path:'registration',component:RegistrationComponent
   },
   {
-    path: 'rezervacije',component: RezervacijeComponent
+    path: 'rezervacije',component: RezervacijeComponent,
+    canActivate:[authGuard]
   },
   {
     path:'onama',component:OnamaComponent
   },
   {
-    path: 'rezervacije-klijenata',component: RezervacijeKlijenataComponent
+    path: 'rezervacije-klijenata',component: RezervacijeKlijenataComponent,
+    canActivate:[authGuard],
+    data:{roles: ['ADMIN']}
   },
   {
     path: 'recenzije',component: RecenzijeComponent
   },
    {
-    path: 'zaposleni',component: ZaposleniComponent
+    path: 'zaposleni',component: ZaposleniComponent,
+    canActivate:[authGuard],
+    data:{roles: ['ADMIN']}
   },
   {
     path: '', redirectTo: '/home',pathMatch: 'full'
