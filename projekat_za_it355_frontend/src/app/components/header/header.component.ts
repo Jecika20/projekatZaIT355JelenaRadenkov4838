@@ -11,12 +11,14 @@ export class HeaderComponent implements OnInit {
 
   jwtToken: string | null;
   uloga: string | null;
+  username: string | null;
 
   constructor(private router: Router, private toastr: ToastrService){}
   ngOnInit(): void {
     this.jwtToken = sessionStorage.getItem("jwtToken");
     this.uloga = sessionStorage.getItem("uloga");
     console.log(this.uloga);
+    this.username=sessionStorage.getItem("username");
   }
 
 
@@ -48,6 +50,7 @@ export class HeaderComponent implements OnInit {
       this.router.navigate(['/home']).then(()=>{
         this.jwtToken = null;
         this.uloga = null;
+        this.username=null;
       });
     }, 500);
   }

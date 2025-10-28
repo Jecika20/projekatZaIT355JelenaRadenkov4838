@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { KorisnikService } from '../../services/Korisnik/korisnik.service';
 import { Router } from '@angular/router';
 import {  ToastrService } from 'ngx-toastr';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
   selector: 'app-login',
@@ -28,7 +29,11 @@ export class LoginComponent implements OnInit{
           console.log(res);
           sessionStorage.setItem("jwtToken", res.jwtToken);
           sessionStorage.setItem("uloga", res.uloga);
-          this.toastr.success("Uspesno ste se ulogovali");
+          const helper = new JwtHelperService();
+          const token = res.jwtToken;
+          const decodedToken = helper.decodeToken(token);
+         sessionStorage.setItem("username",decodedToken.sub.split('@')[0]);
+          
           setTimeout(() => {
             this.loginForm.reset();
             this.router.navigate(['/home']);

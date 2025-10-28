@@ -1,7 +1,7 @@
 <app-header></app-header>
 
 <div class="container" style="min-height: 80vh;">
-    <button class="btn btn-success btn-sm m-5" (click)="openCreateDialog()">Dodaj novo vozilo</button>
+    <button class="btn btn-success btn-sm m-5" *ngIf="uloga=='ADMIN' || uloga=='RADNIK'" (click)="openCreateDialog()">Dodaj novo vozilo</button>
     <h1>Automobili</h1>
     <hr>
     <div class="d-flex p-4 flex-wrap justify-content-start" *ngIf="automobili.length>0; else emptyAutomobili" style="align-items: stretch;">

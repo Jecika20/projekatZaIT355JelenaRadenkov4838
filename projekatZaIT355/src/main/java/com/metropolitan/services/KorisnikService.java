@@ -106,6 +106,9 @@ public class KorisnikService implements UserDetailsService {
         radnik.setPrezime(radnikDTO.getPrezime());
         radnik.setGrad(radnikDTO.getGrad());
         radnik.setTelefon(radnikDTO.getTelefon());
+        radnik.setEmail(radnikDTO.getEmail());
+        radnik.setSifra(passwordEncoder.encode(radnikDTO.getSifra()));
+        radnik.setUloga(Uloga.RADNIK);
         return radnikRepository.save(radnik);
     }
     public Radnik updateRadnik(int id,RadnikDTO radnikDTO){
@@ -119,13 +122,10 @@ public class KorisnikService implements UserDetailsService {
         }
         radnik.setSalon(salon);
         radnik.setAdresa(radnikDTO.getAdresa());
-        radnik.setEmail(radnikDTO.getEmail());
         radnik.setIme(radnikDTO.getIme());
         radnik.setPrezime(radnikDTO.getPrezime());
         radnik.setGrad(radnikDTO.getGrad());
         radnik.setTelefon(radnikDTO.getTelefon());
-        radnik.setSifra(passwordEncoder.encode(radnikDTO.getSifra()));
-        radnik.setUloga(Uloga.RADNIK);
         return radnikRepository.save(radnik);
     }
 
