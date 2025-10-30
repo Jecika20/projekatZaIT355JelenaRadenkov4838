@@ -7,6 +7,7 @@ import com.metropolitan.enums.TipCamca;
 import com.metropolitan.enums.TipVozila;
 import com.metropolitan.models.Camac;
 import com.metropolitan.models.Salon;
+import com.metropolitan.models.SlikeVozila;
 import com.metropolitan.repositories.CamacRepository;
 import com.metropolitan.repositories.SalonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +48,10 @@ public class CamacService {
         camac.setOpis(camacDTO.getOpis());
         camac.setDuzina(camacDTO.getDuzina());
         camac.setTipCamca(TipCamca.valueOf(camacDTO.getTipCamca()));
+        SlikeVozila slika = new SlikeVozila();
+        slika.setSlika(camacDTO.getSlika());
+        slika.setVozilo(camac);
+        camac.getSlikeVozila().add(slika);
         camac.setSalon(salon);
         return camacRepository.save(camac);
     }
@@ -65,6 +70,12 @@ public class CamacService {
         camac.setOpis(updateCamacDTO.getOpis());
         camac.setDuzina(updateCamacDTO.getDuzina());
         camac.setTipCamca(TipCamca.valueOf(updateCamacDTO.getTipCamca()));
+        if(updateCamacDTO.getSlika() != null && !updateCamacDTO.getSlika().equals("")){
+            SlikeVozila slika = new SlikeVozila();
+            slika.setSlika(updateCamacDTO.getSlika());
+            slika.setVozilo(camac);
+            camac.getSlikeVozila().add(slika);
+        }
         return camacRepository.save(camac);
     }
 }

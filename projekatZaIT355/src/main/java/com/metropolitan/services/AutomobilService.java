@@ -8,6 +8,7 @@ import com.metropolitan.enums.TipVozila;
 import com.metropolitan.enums.VrstaAutomobila;
 import com.metropolitan.models.Automobil;
 import com.metropolitan.models.Salon;
+import com.metropolitan.models.SlikeVozila;
 import com.metropolitan.repositories.AutomobilRepository;
 import com.metropolitan.repositories.SalonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +50,10 @@ public class AutomobilService {
         automobil.setTipGoriva(TipGoriva.valueOf(automobilDTO.getTipGoriva()));
         automobil.setVrstaAutomobila(VrstaAutomobila.valueOf(automobilDTO.getVrstaAutomobila()));
         automobil.setBrojSedista(automobilDTO.getBrojSedista());
+        SlikeVozila slika = new SlikeVozila();
+        slika.setSlika(automobilDTO.getSlika());
+        slika.setVozilo(automobil);
+        automobil.getSlikeVozila().add(slika);
         automobil.setSalon(salon);
         return automobilRepository.save(automobil);
     }
@@ -69,6 +74,12 @@ public class AutomobilService {
         automobil.setTipGoriva(TipGoriva.valueOf(updateAutomobilDTO.getTipGoriva()));
         automobil.setBrojSedista(updateAutomobilDTO.getBrojSedista());
         automobil.setVrstaAutomobila(VrstaAutomobila.valueOf(updateAutomobilDTO.getVrstaAutomobila()));
+        if(updateAutomobilDTO.getSlika() != null && !updateAutomobilDTO.getSlika().equals("")){
+            SlikeVozila slika = new SlikeVozila();
+            slika.setSlika(updateAutomobilDTO.getSlika());
+            slika.setVozilo(automobil);
+            automobil.getSlikeVozila().add(slika);
+        }
         return automobilRepository.save(automobil);
     }
 }

@@ -22,4 +22,5 @@ public class MotorDTO {
     private int brojCilindara;
     private int brojTockova;
     private String tipMotora;
+    private String slika;
 }

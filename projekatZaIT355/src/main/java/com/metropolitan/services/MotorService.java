@@ -7,6 +7,7 @@ import com.metropolitan.enums.TipMotora;
 import com.metropolitan.enums.TipVozila;
 import com.metropolitan.models.Motor;
 import com.metropolitan.models.Salon;
+import com.metropolitan.models.SlikeVozila;
 import com.metropolitan.repositories.MotorRepository;
 import com.metropolitan.repositories.SalonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,10 @@ public class MotorService {
         motor.setBrojCilindara(motorDTO.getBrojCilindara());
         motor.setBrojTockova(motorDTO.getBrojTockova());
         motor.setTipMotora(TipMotora.valueOf(motorDTO.getTipMotora()));
+        SlikeVozila slika = new SlikeVozila();
+        slika.setSlika(motorDTO.getSlika());
+        slika.setVozilo(motor);
+        motor.getSlikeVozila().add(slika);
         motor.setSalon(salon);
         return motorRepository.save(motor);
     }
@@ -65,6 +70,12 @@ public class MotorService {
         motor.setBrojCilindara(updateMotorDTO.getBrojCilindara());
         motor.setBrojTockova(updateMotorDTO.getBrojTockova());
         motor.setTipMotora(TipMotora.valueOf(updateMotorDTO.getTipMotora()));
+        if(updateMotorDTO.getSlika() != null && !updateMotorDTO.getSlika().equals("")){
+            SlikeVozila slika = new SlikeVozila();
+            slika.setSlika(updateMotorDTO.getSlika());
+            slika.setVozilo(motor);
+            motor.getSlikeVozila().add(slika);
+        }
         return motorRepository.save(motor);
     }
 

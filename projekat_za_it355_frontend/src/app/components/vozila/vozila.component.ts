@@ -72,7 +72,8 @@ export class VozilaComponent implements OnInit {
         brojVrata: ['', [Validators.required]],
         tipGoriva:['', [Validators.required]],
         brojSedista: ['', [Validators.required]],
-        vrstaAutomobila: ['', [Validators.required]]
+        vrstaAutomobila: ['', [Validators.required]],
+        slika: ['']
       })
     }else if(this.vrstaVozila=='Motor'){
       this.voziloForm= this.formBuilder.group({
@@ -85,7 +86,8 @@ export class VozilaComponent implements OnInit {
         opis: ['', [Validators.required]],
         brojCilindara: ['', [Validators.required]],
         brojTockova: ['', [Validators.required]],
-        tipMotora:['', [Validators.required]]
+        tipMotora:['', [Validators.required]],
+        slika: ['']
       })
     }else if(this.vrstaVozila=='Camac'){
       this.voziloForm= this.formBuilder.group({
@@ -97,11 +99,55 @@ export class VozilaComponent implements OnInit {
         kilometraza: ['', [Validators.required]],
         opis: ['', [Validators.required]],
         duzina: ['', [Validators.required]],
-        tipCamca:['', [Validators.required]]
+        tipCamca:['', [Validators.required]],
+        slika: ['']
       })
     }
   }
+  onFileSelected(event: any) {
+  const file = event.target.files[0];
 
+  if (file) {
+    if (!file.name.match(/\.(jpg|jpeg|png)$/i)) {
+      this.toastr.warning('Dozvoljene su samo slike (.jpg, .png)');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      const base64String = reader.result as string;
+      this.voziloForm.patchValue({ slika: base64String });
+      console.log("Slika učitana:", base64String);
+    };
+    reader.readAsDataURL(file);
+  }
+}
+  onEditFileSelected(event: any, tip: string) {
+  const file = event.target.files[0];
+
+  if (file) {
+    if (!file.name.match(/\.(jpg|jpeg|png)$/i)) {
+      this.toastr.warning('Dozvoljene su samo slike (.jpg, .png)');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      const base64String = reader.result as string;
+
+      if (tip === 'AUTOMOBIL') {
+        this.automobilForm.patchValue({ slika: base64String });
+      } else if (tip === 'MOTOR') {
+        this.motorForm.patchValue({ slika: base64String });
+      } else if (tip === 'CAMAC') {
+        this.camacForm.patchValue({ slika: base64String });
+      }
+
+      this.toastr.info('Nova slika je učitana');
+    };
+    reader.readAsDataURL(file);
+  }
+}
   openDialog(id:number,flag:number, tipVozila: string){
     this.vozilo= this.vozila.find(v => v.id==id);
     this.flag=flag;
@@ -119,7 +165,8 @@ export class VozilaComponent implements OnInit {
         brojVrata: [this.vozilo?.brojVrata, [Validators.required]],
         tipGoriva:[this.vozilo?.tipGoriva, [Validators.required]],
         brojSedista: [this.vozilo?.brojSedista, [Validators.required]],
-        vrstaAutomobila: [this.vozilo?.vrstaAutomobila, [Validators.required]]
+        vrstaAutomobila: [this.vozilo?.vrstaAutomobila, [Validators.required]],
+        slika: ['']
       })
     }else if(this.vozilo && this.tipVozila=='MOTOR'){
       this.motorForm= this.formBuilder.group({
@@ -133,7 +180,8 @@ export class VozilaComponent implements OnInit {
         opis: [this.vozilo?.opis, [Validators.required]],
         brojCilindara: [this.vozilo?.brojCilindara, [Validators.required]],
         brojTockova: [this.vozilo?.brojTockova, [Validators.required]],
-        tipMotora:[this.vozilo?.tipMotora, [Validators.required]]
+        tipMotora:[this.vozilo?.tipMotora, [Validators.required]],
+        slika: ['']
       })
     }else if(this.vozilo && this.tipVozila=='CAMAC'){
       this.camacForm= this.formBuilder.group({
@@ -146,7 +194,8 @@ export class VozilaComponent implements OnInit {
         kilometraza: [this.vozilo?.kilometraza, [Validators.required]],
         opis: [this.vozilo?.opis, [Validators.required]],
         duzina: [this.vozilo?.duzina, [Validators.required]],
-        tipCamca:[this.vozilo?.tipCamca, [Validators.required]]
+        tipCamca:[this.vozilo?.tipCamca, [Validators.required]],
+        slika: ['']
       })
     }
     this.showDialog= true;
@@ -156,6 +205,7 @@ export class VozilaComponent implements OnInit {
   }
   izmenaAutomobila(){
     if(this.automobilForm.valid){
+      console.log(this.automobilForm.value);
       this.voziloService.izmenaAutomobila(this.automobilForm.value).subscribe({
         next: (res: any)=> {
           this.toastr.success("Uspesno ste izmneili vozilo iz salona");
@@ -214,6 +264,7 @@ export class VozilaComponent implements OnInit {
       this.toastr.error("Niste dobro popunili formu. Pokusajte ponovo");
       return;
     }
+    console.log(this.voziloForm.value);
     const podaciZaKreiranje= {
       ...this.voziloForm.value, salon_id: this.id
     }

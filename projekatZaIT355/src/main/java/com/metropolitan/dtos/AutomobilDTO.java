@@ -25,4 +25,5 @@ public class AutomobilDTO {
     private String tipGoriva;
     private int brojSedista;
     private String vrstaAutomobila;
+    private String slika;
 }

@@ -21,4 +21,5 @@ public class CamacDTO {
     private int salon_id;
     private double duzina;
     private String tipCamca;
+    private String slika;
 }

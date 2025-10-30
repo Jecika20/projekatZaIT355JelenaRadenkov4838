@@ -7,7 +7,9 @@
     <div class="d-flex p-4 flex-wrap justify-content-start" *ngIf="automobili.length>0; else emptyAutomobili" style="align-items: stretch;">
         <div class="card mt-3 " style="flex: 0  0 350px; margin-right: 65px; display: flex; flex-direction: column;" *ngFor="let automobil of automobili">
             <ng-container *ngIf="automobil.slikeVozila.length>0; else nemaSliku">
-                <img class="card-img-top" src="/assets/images/{{automobil.slikeVozila[0].slika}}" alt="Slika nije ucitana" style="height: 215px; object-fit: cover;">
+                <img class="card-img-top"
+                [src]="automobil.slikeVozila[0].slika.startsWith('data:image') ? automobil.slikeVozila[0].slika : '/assets/images/' + automobil.slikeVozila[0].slika"
+                alt="Slika nije učitana" style="height: 215px; object-fit: cover;">
             </ng-container>
             <ng-template #nemaSliku>
                 <img class="card-img-top" src="/assets/images/noimage.jpg" alt="Slika nije ucitana" style="height: 215px; object-fit: cover;">
@@ -39,7 +41,9 @@
     <div class="d-flex p-4 flex-wrap justify-content-start" *ngIf="motori.length>0; else emptyMotori"  style="align-items: stretch;">
         <div class="card mt-3 " style="flex: 0  0 350px; margin-right: 65px; display: flex; flex-direction: column;" *ngFor="let motor of motori">
             <ng-container *ngIf="motor.slikeVozila.length>0; else nemaSliku">
-                <img class="card-img-top" src="/assets/images/{{motor.slikeVozila[0].slika}}" alt="Slika nije ucitana" style="height: 215px; object-fit: cover;">
+               <img class="card-img-top"
+                [src]="motor.slikeVozila[0].slika.startsWith('data:image') ? motor.slikeVozila[0].slika : '/assets/images/' + motor.slikeVozila[0].slika"
+                alt="Slika nije učitana" style="height: 215px; object-fit: cover;">
             </ng-container>
             <ng-template #nemaSliku>
                 <img class="card-img-top" src="/assets/images/noimage.jpg" alt="Slika nije ucitana" style="height: 215px; object-fit: cover;">
@@ -69,7 +73,9 @@
     <div class="d-flex p-4 flex-wrap" *ngIf="camci.length > 0; else emptyCamci" style="align-items: stretch;">
         <div class="card mt-3" style="flex: 0  0 350px; margin-right: 65px; display: flex; flex-direction: column;" *ngFor="let camac of camci">
             <ng-container *ngIf="camac.slikeVozila.length>0; else nemaSliku">
-                <img class="card-img-top" src="/assets/images/{{camac.slikeVozila[0].slika}}" alt="Slika nije ucitana" style="height: 215px; object-fit: cover;">
+                <img class="card-img-top"
+                [src]="camac.slikeVozila[0].slika.startsWith('data:image') ? camac.slikeVozila[0].slika : '/assets/images/' + camac.slikeVozila[0].slika"
+                alt="Slika nije učitana" style="height: 215px; object-fit: cover;">
             </ng-container>
             <ng-template #nemaSliku>
                 <img class="card-img-top" src="/assets/images/noimage.jpg" alt="Slika nije ucitana" style="height: 215px; object-fit: cover;">
@@ -147,6 +153,11 @@
                 <div *ngIf="automobilForm.get('opis')?.invalid && (automobilForm.get('opis')?.touched || automobilForm.get('opis')?.dirty)">
                     <small class="text-danger" *ngIf="automobilForm.get('opis')?.errors?.['required']">OPis je obavezno polje</small>
                 </div>
+            </div>
+           <div class="form-group">
+            <label for="slika" class="form-label">Slika vozila</label>
+            <input type="file" id="slika" class="form-control" (change)="onEditFileSelected($event, 'AUTOMOBIL')" accept="image/*">
+            <small class="text-muted">Ako ne izaberete novu sliku, koristiće se postojeća.</small>
             </div>
             <div class="form-group">
                 <label for="brojVrata" class="form-label">Broj vrata</label>
@@ -235,6 +246,11 @@
                 </div>
             </div>
             <div class="form-group">
+            <label for="slika" class="form-label">Slika vozila</label>
+            <input type="file" id="slika" class="form-control" (change)="onEditFileSelected($event, 'MOTOR')" accept="image/*">
+            <small class="text-muted">Ako ne izaberete novu sliku, koristiće se postojeća.</small>
+            </div>
+            <div class="form-group">
                 <label for="brojCilindara" class="form-label">Broj cilindara</label>
                 <input type="number" class="form-control" formControlName="brojCilindara" id="brojCilindara" placeholder="Unesite brojCilindara" required/>
                 <div *ngIf="motorForm.get('brojCilindara')?.invalid && (motorForm.get('brojCilindara')?.touched || motorForm.get('brojCilindara')?.dirty)">
@@ -305,6 +321,11 @@
                 <div *ngIf="camacForm.get('opis')?.invalid && (camacForm.get('opis')?.touched || camacForm.get('opis')?.dirty)">
                     <small class="text-danger" *ngIf="camacForm.get('opis')?.errors?.['required']">OPis je obavezno polje</small>
                 </div>
+            </div>
+            <div class="form-group">
+            <label for="slika" class="form-label">Slika vozila</label>
+            <input type="file" id="slika" class="form-control" (change)="onEditFileSelected($event, 'CAMAC')" accept="image/*">
+            <small class="text-muted">Ako ne izaberete novu sliku, koristiće se postojeća.</small>
             </div>
             <div class="form-group">
                 <label for="duzina" class="form-label">Duzina</label>
@@ -408,6 +429,10 @@
                         <div *ngIf="voziloForm.get('opis')?.invalid && (voziloForm.get('opis')?.touched || voziloForm.get('opis')?.dirty)">
                             <small class="text-danger" *ngIf="voziloForm.get('opis')?.errors?.['required']">Opis je obavezno polje</small>
                         </div>
+                    </div>
+                      <div class="form-group">
+                    <label class="form-label">Slika vozila</label>
+                    <input type="file" class="form-control" (change)="onFileSelected($event)" accept="image/*">
                     </div>
 
                     <div *ngIf="vrstaVozila=='Automobil'">

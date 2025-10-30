@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -44,7 +45,7 @@ public class Vozilo {
     private Set<Rezervacija> rezervacija;
 
     @OneToMany(mappedBy = "vozilo", fetch = FetchType.LAZY, cascade = CascadeType.ALL )
-    private Set<SlikeVozila> slikeVozila;
+    private Set<SlikeVozila> slikeVozila= new HashSet<SlikeVozila>();
 
     @OneToMany(mappedBy = "vozilo", fetch = FetchType.LAZY, cascade = CascadeType.ALL )
     private Set<Recenzija> recenzija;

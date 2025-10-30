@@ -6,7 +6,7 @@
             <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
                   <div class="carousel-item" *ngFor="let voziloSlika of vozilo?.slikeVozila; let i=index" [class.active]="i===0" >
-                    <img src="assets/images/{{voziloSlika.slika}}" class="d-block carousel-image" alt="Slika nije ucitana">
+                    <img [src]="voziloSlika.slika.startsWith('data:image')  ? voziloSlika.slika  : '/assets/images/' + voziloSlika.slika" class="d-block carousel-image" alt="Slika nije ucitana">
                   </div>
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">

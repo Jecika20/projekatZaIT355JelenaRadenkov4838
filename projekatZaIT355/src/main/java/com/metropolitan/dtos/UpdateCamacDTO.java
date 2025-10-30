@@ -20,5 +20,6 @@ public class UpdateCamacDTO {
     private String opis;
     private double duzina;
     private String tipCamca;
+    private String slika;
 
 }

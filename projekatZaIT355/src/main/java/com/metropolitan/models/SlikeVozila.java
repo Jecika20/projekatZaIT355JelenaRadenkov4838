@@ -16,7 +16,10 @@ public class SlikeVozila {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private int id;
+    @Column(columnDefinition = "LONGTEXT")
     private String slika;
+
+
 
     @ManyToOne
     @JoinColumn(name="vozilo_id")

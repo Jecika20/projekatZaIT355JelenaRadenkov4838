@@ -88,8 +88,12 @@ export class SaloniComponent implements OnInit {
     }
 
     
-    this.noviSalon.slika = file.name;
-    console.log('Izabrana slika:', this.noviSalon.slika);
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.noviSalon.slika = reader.result as string;  
+      console.log('Base64 slika:', this.noviSalon.slika);
+    };
+    reader.readAsDataURL(file);
   }
 }
 obrisiSalon(id: number) {

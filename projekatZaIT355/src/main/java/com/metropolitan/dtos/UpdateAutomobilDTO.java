@@ -22,4 +22,5 @@ public class UpdateAutomobilDTO {
     private String tipGoriva;
     private int brojSedista;
     private String vrstaAutomobila;
+    private String slika;
 }

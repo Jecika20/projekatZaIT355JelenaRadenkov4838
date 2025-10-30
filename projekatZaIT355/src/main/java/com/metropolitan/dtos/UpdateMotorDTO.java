@@ -21,4 +21,5 @@ public class UpdateMotorDTO {
     private int brojCilindara;
     private int brojTockova;
     private String tipMotora;
+    private String slika;
 }
