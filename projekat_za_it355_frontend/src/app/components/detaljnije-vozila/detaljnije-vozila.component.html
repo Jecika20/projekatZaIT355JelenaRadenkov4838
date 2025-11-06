@@ -95,7 +95,7 @@
       <div class="w-75">
         <h3 class="mb-4 border-bottom pb-2 text-center">Recenzije</h3>
         <div class="d-flex justify-content-center mb-4">
-        <button class="btn btn-outline-primary mt-1" (click)="openRecenzijaModal()"> Dodaj recenziju</button>
+        <button class="btn btn-outline-primary mt-1" *ngIf="jwtToken!=null" (click)="openRecenzijaModal()"> Dodaj recenziju</button>
         </div>
         <div *ngIf="aktivneRecenzije.length > 0; else noReviews" class="row row-cols-1 row-cols-md-2 g-4 justify-content-center">
           <div *ngFor="let recenzija of aktivneRecenzije" class="col d-flex justify-content-center">

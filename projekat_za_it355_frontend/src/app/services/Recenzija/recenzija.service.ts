@@ -18,7 +18,9 @@ export class RecenzijaService {
   prikazNeaktivnihRecenzija(): Observable<Recenzija[]>{
     return  this.http.get<Recenzija[]>(this.apiUrl + "/noActive");
   }
-  
+  prikazAktivnihRecenzija(): Observable<Recenzija[]>{
+    return  this.http.get<Recenzija[]>(this.apiUrl + "/active");
+  }
   aktivirajRecenziju(recenzijaId:number){
 return this.http.get(this.apiUrl + "/aktiviraj/" +recenzijaId);
   }

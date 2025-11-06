@@ -100,4 +100,8 @@ public class RecenzijaService {
         recenzija.setAktivna(true);
         return recenzijaRepository.save(recenzija);
     }
+
+    public List<Recenzija> getAllRecenzijeActive() {
+        return recenzijaRepository.findByAktivnaIsTrue();
+    }
 }

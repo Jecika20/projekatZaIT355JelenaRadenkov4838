@@ -19,15 +19,29 @@ export class RezervacijeKlijenataComponent implements OnInit{
   showDialog=false;
   rezervacija: number;
   flag:number;
+  
  
 
   constructor(private rezervacijaService: RezervacijaService, private toastr:ToastrService){}
   ngOnInit(): void {
-    this.loadData();
+    if(sessionStorage.getItem("uloga")==='RADNIK'){
+        this.loadDataByRadnik();
+    }else{
+       this.loadData();
+    }
   }
 
   loadData(){
     this.rezervacijaService.getAllRezervacije().subscribe({
+      next: (res:RezervacijeKorisnika[])=>{
+        this.aktivneRezervacije=res.filter(r=>r.statusRezervacije==='AKTIVNA');
+        this.otkazaneRezervacije=res.filter(r=>r.statusRezervacije==='OTKAZANA');
+        this.zavrseneRezervacije=res.filter(r=>r.statusRezervacije==='ZAVRSENA');
+      }
+    })
+  }
+  loadDataByRadnik(){
+    this.rezervacijaService. getAllRezervacijeByRadnikSalon().subscribe({
       next: (res:RezervacijeKorisnika[])=>{
         this.aktivneRezervacije=res.filter(r=>r.statusRezervacije==='AKTIVNA');
         this.otkazaneRezervacije=res.filter(r=>r.statusRezervacije==='OTKAZANA');

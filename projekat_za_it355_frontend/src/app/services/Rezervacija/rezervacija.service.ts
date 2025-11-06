@@ -33,4 +33,7 @@ export class RezervacijaService {
   brisanjeRezervacije(id:number){
     return this.http.delete(this.apiUrl+ "/" +id);
   }
+  getAllRezervacijeByRadnikSalon(): Observable<RezervacijeKorisnika[]>{
+    return this.http.get<RezervacijeKorisnika[]>(this.apiUrl+"/byRadnikSalon");
+  }
 }

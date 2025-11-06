@@ -38,7 +38,44 @@
                 </tr>
             </tbody>
         </table>
-        <pagination-controls #paginacijaAktivne (pageChange)="pageNeaktivne = $event" id="paginacijaNeaktivne"></pagination-controls>
+        <pagination-controls #paginacijaNeaktivne (pageChange)="pageNeaktivne = $event" id="paginacijaNeaktivne"></pagination-controls>
+    </div>
+
+    <h1 class="mt-5"> Aktivne recenzije klijenata</h1>
+    <hr>
+    <div>
+        <table class="table mb-4 table-hover table-border text-center">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Br. rezenzije</th>
+                    <th>Komentar</th>
+                    <th>Ocena</th>
+                    <th>Klijent</th>
+                    <th>Vreme kreiranja</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let rk of aktivneRecenzije | paginate: { id: 'paginacijaAktivne',itemsPerPage: 3, currentPage: pageAktivne, totalItems: aktivneRecenzije.length}">
+                    <td class="align-middle">
+                        {{rk.id}}
+                    </td>
+                    <td class="align-middle">
+                        {{rk.komentar}} 
+                    </td>
+                    <td class="align-middle">
+                        {{rk.ocena}}
+                    </td>
+                    <td class="align-middle">
+                         {{rk.korisnik.ime}} {{rk.korisnik.prezime}}, tel: {{rk.korisnik.telefon}}
+                    </td>
+                    
+                    <td class="align-middle">
+                        {{rk.vremeKreiranja | date: 'short'}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <pagination-controls #paginacijaAktivne (pageChange)="pageAktivne = $event" id="paginacijaAktivne"></pagination-controls>
     </div>
 </div>
 <app-footer></app-footer>

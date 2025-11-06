@@ -26,6 +26,11 @@ public class RecenzijaController {
         List<Recenzija> recenzija= recenzijaService.getAllRecenzijeNotActive();
         return ResponseEntity.ok(recenzija);
     }
+    @GetMapping("/active")
+    public ResponseEntity<List<Recenzija>> getAllRecenzijaActive(){
+        List<Recenzija> recenzija= recenzijaService.getAllRecenzijeActive();
+        return ResponseEntity.ok(recenzija);
+    }
     @GetMapping("/{id}")
     public ResponseEntity<Recenzija> getRecenzijaById(@PathVariable ("id")int id){
         Recenzija recenzija = recenzijaService.getRecenzijaById(id);

@@ -14,6 +14,9 @@ export class RecenzijeComponent implements OnInit {
 
   neAktivneRecenzije: Recenzija[] = [];
   pageNeaktivne: number = 1;
+  aktivneRecenzije: Recenzija[] = [];
+  pageAktivne: number = 1;
+  
 
   constructor(private recenzijaService: RecenzijaService, private toastr: ToastrService) {
 
@@ -28,6 +31,11 @@ export class RecenzijeComponent implements OnInit {
     this.recenzijaService.prikazNeaktivnihRecenzija().subscribe({
       next: (res: Recenzija[]) => {
         this.neAktivneRecenzije = res;
+      }
+    });
+    this.recenzijaService.prikazAktivnihRecenzija().subscribe({
+      next: (res: Recenzija[]) => {
+        this.aktivneRecenzije = res;
       }
     })
 

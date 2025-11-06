@@ -42,7 +42,8 @@ const routes: Routes = [
   {
     path: 'rezervacije-klijenata',component: RezervacijeKlijenataComponent,
     canActivate:[authGuard],
-    data:{roles: ['ADMIN']}
+    data:{roles: ['ADMIN','RADNIK']}
+
   },
   {
     path: 'recenzije',component: RecenzijeComponent

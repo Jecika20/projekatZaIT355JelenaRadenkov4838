@@ -13,6 +13,7 @@ export class RezervacijeComponent implements OnInit{
   showDialog=false;
   rezervacijaZaOtkazivanje: number;
   page: number = 1;
+  
   constructor(private rezervacijaService: RezervacijaService,private toastr:ToastrService){
 
   }
