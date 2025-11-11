@@ -111,6 +111,9 @@
                   </ng-container>
                 </div>
                 <p class="card-text flex-grow-1">{{recenzija.komentar}}</p>
+                <div *ngIf="recenzija.korisnik.email==email">
+                  <button class="btn btn-danger" (click)="obrisi(recenzija.id)">Obrisi</button>
+                </div>
               </div>
             </div>
           </div>

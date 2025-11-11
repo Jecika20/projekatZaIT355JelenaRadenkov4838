@@ -24,6 +24,10 @@ export class RecenzijaService {
   aktivirajRecenziju(recenzijaId:number){
 return this.http.get(this.apiUrl + "/aktiviraj/" +recenzijaId);
   }
-
+ deaktivirajRecenziju(recenzijaId:number){
+return this.http.get(this.apiUrl + "/deaktiviraj/" +recenzijaId);
   }
-
+  obrisiRecenziju(id:number):Observable<Recenzija>{
+    return this.http.delete<Recenzija>(this.apiUrl+ "/" + id);
+  }
+}

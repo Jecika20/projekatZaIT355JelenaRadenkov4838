@@ -72,6 +72,14 @@ public class RecenzijaController {
         }
         return ResponseEntity.ok(recenzija);
     }
+    @GetMapping("/deaktiviraj/{id}")
+    public ResponseEntity<Recenzija> deaktivirajRecenziju(@PathVariable("id")int id){
+        Recenzija recenzija= recenzijaService.deaktivirajRecenziju(id);
+        if(recenzija==null){
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok(recenzija);
+    }
 
 
 }

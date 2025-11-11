@@ -104,4 +104,14 @@ public class RecenzijaService {
     public List<Recenzija> getAllRecenzijeActive() {
         return recenzijaRepository.findByAktivnaIsTrue();
     }
-}
+
+    public Recenzija deaktivirajRecenziju(int recenzijaId) {
+        Recenzija recenzija = recenzijaRepository.findById(recenzijaId);
+        if (recenzija == null) {
+            return null;
+        }
+        recenzija.setAktivna(false);
+        return recenzijaRepository.save(recenzija);
+    }
+    }
+

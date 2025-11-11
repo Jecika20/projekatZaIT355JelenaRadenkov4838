@@ -72,6 +72,9 @@
                     <td class="align-middle">
                         {{rk.vremeKreiranja | date: 'short'}}
                     </td>
+                    <td class="align-middle">
+                        <button class="btn btn-danger btn-sm" (click)="deaktiviraj(rk.id)" >Deaktiviraj</button>
+                    </td>
                 </tr>
             </tbody>
         </table>

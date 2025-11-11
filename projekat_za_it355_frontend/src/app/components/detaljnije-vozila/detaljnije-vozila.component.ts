@@ -19,6 +19,7 @@ export class DetaljnijeVozilaComponent implements OnInit {
   id: string;
   jwtToken: string | null;
   uloga: string | null;
+  email: string | null;
   showDialog=false;
   dialogTitle="Forma za rezervaciju vozila ";
   vremeForm: FormGroup;
@@ -35,6 +36,7 @@ export class DetaljnijeVozilaComponent implements OnInit {
     this.id = this.route.snapshot.params['id'];
     this.uloga = sessionStorage.getItem("uloga");
     this.jwtToken = sessionStorage.getItem("jwtToken");
+    this.email=sessionStorage.getItem("email");
     this.voziloService.getVoziloById(Number(this.id)).subscribe({
       next: (res:any)=>{
         this.vozilo=res;
@@ -137,5 +139,17 @@ export class DetaljnijeVozilaComponent implements OnInit {
       this.showRecenzijaModal = false;
       this.recenzijaForm.reset();
     }
+  }
+  obrisi(id:number){
+    this.recenzijaService.obrisiRecenziju(id).subscribe({
+      next: (res: any)=>{
+        this.toastr.success("Uspesno obrisana recenzija, ceka se potvrda");
+        this.aktivneRecenzije= this.aktivneRecenzije.filter((r: Recenzija) => r.id!=id);
+      },
+      error: (err: any)=>{
+        this.toastr.error("Doslo je do greske, prilikom brisanja recenzije pokusajte ponovo");
+        
+      }
+    })
   }
 }

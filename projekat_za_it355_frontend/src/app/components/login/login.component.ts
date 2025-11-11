@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit{
           const token = res.jwtToken;
           const decodedToken = helper.decodeToken(token);
          sessionStorage.setItem("username",decodedToken.sub.split('@')[0]);
-          
+        sessionStorage.setItem("email",decodedToken.sub);
           setTimeout(() => {
             this.loginForm.reset();
             this.router.navigate(['/home']);

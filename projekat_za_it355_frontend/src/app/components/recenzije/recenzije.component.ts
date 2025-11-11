@@ -52,6 +52,15 @@ export class RecenzijeComponent implements OnInit {
       }
     })
   }
-
-
+    deaktiviraj(recenzijaId: number) {
+    this.recenzijaService.deaktivirajRecenziju(recenzijaId).subscribe({
+      next: (res:any)=>{
+        this.toastr.success("Uspesno deaktivirana recenzija");
+        this.loadData();
+      },
+      error:(err:any)=>{
+        this.toastr.error("Doslo je do greske prilikom deaktiviranja");
+      }
+    })
+  }
 }
